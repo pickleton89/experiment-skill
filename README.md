@@ -90,6 +90,15 @@ All artifacts use a linked naming scheme:
 
 Examples: `boltz2_analysis_plan.md`, `boltz2_analysis_process_tier1.md`, `boltz2_analysis_findings_tier1.md`, `boltz2_analysis_report.md`
 
+## Graph and Examples
+
+- **[docs/graph.md](docs/graph.md)** — Hub document with command relationships, data flow map, canonical definitions (naming convention, status enum, INDEX.md update protocol), and wikilink resolution convention.
+- **[examples/](examples/)** — Full synthetic examples for each lifecycle stage, all using the `rna_folding` workstream so readers can trace data across the full lifecycle:
+  - `plan-example.md` — 3-phase plan (data prep, prediction, validation)
+  - `capture-example.md` — 8-section process artifact for phase 1
+  - `findings-example.md` — findings with 2 analysis units
+  - `report-example.md` — IMRAD report integrating all phases
+
 ## Design
 
 See [docs/design.md](docs/design.md) for the full design document.

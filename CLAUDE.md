@@ -64,15 +64,27 @@ Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`. The 
 - **Opt-in branding** — only `/experiment-report --oligon` triggers Oligon PDF generation via pandoc. Default output is plain markdown.
 - **Coexists with `/research-product-synthesizer`** — that skill stays for non-science contexts; `/experiment-capture` is the science-aware evolution.
 
+## Graph Hub and Examples
+
+- **`docs/graph.md`** — Single source of truth for command relationships, canonical definitions (naming convention, status enum, INDEX.md update protocol), wikilink resolution convention, and data flow dependencies. All commands reference this file via `[[graph]]` wikilinks.
+- **`examples/`** — Full synthetic examples using the `rna_folding` workstream, one per lifecycle stage. Commands reference these via inline abbreviated examples + wikilinks to the full versions.
+
 ## Editing Commands
 
 When modifying a command file, preserve:
+- The `<!-- template-version: 1.0 -->` tag on line 1
+- The lifecycle diagram comment on line 2
 - The `$ARGUMENTS` variable reference (Claude Code substitutes user input here)
 - The Phase 0/1/2 structure — discovery, generation, write+register
+- The workstream naming validation block in Phase 0
 - The "Handling Incomplete Context" section at the bottom (graceful degradation)
-- INDEX.md update logic (find-or-create table section, append row, update timestamp)
+- The canonical INDEX.md update protocol (8-step block from `docs/graph.md`)
+- The "Downstream Dependencies" section documenting which commands consume the output
+- The "Do Not" subsection under Formatting Standards
 
 The embedded template (inside the fenced code block in Phase 1) defines the output document structure. Section numbering, YAML frontmatter fields, and table schemas are the contract — downstream commands depend on them (e.g., `/experiment-findings` reads process artifact tables; `/experiment-report` reads findings structure).
+
+When updating the INDEX.md protocol, update it in `docs/graph.md` first (the canonical source), then propagate the identical block to all 4 lifecycle commands (plan, capture, findings, report).
 
 ## Shell Script Gotcha
 

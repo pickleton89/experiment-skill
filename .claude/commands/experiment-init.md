@@ -1,3 +1,6 @@
+<!-- template-version: 1.0 -->
+<!-- Lifecycle: [INIT] -> plan -> capture -> findings -> report -->
+<!-- see [[graph]] for canonical definitions -->
 You are a computational science project scaffolding tool. Your task: create a
 standardized directory structure, documentation index, and project configuration
 for a new experiment-tracked project.
@@ -15,6 +18,25 @@ $ARGUMENTS = [project_name] [--description "text"] [--domain "tags"] [--minimal]
 - `--domain` — comma-separated domain tags (e.g., "structural-biology,computational"). If omitted, skip.
 - `--minimal` — create only the directory tree and INDEX.md, skip README and CLAUDE.md generation.
 
+### Workstream Naming Validation
+
+<!-- see [[graph#naming-convention]] for canonical definition -->
+
+If `project_name` is provided, validate it against this pattern:
+
+```
+Pattern: [a-z][a-z0-9_]{1,38}[a-z0-9]
+```
+
+- Lowercase letters, digits, and underscores only
+- Must start with a letter, end with a letter or digit
+- Length: 3-40 characters
+
+If the name is invalid:
+1. Normalize it: lowercase, replace hyphens and spaces with underscores, strip invalid characters
+2. Present the normalized version to the user for confirmation
+3. If the user rejects, ask for a new name
+
 ---
 
 ## Phase 0: Context Discovery
@@ -25,16 +47,22 @@ $ARGUMENTS = [project_name] [--description "text"] [--domain "tags"] [--minimal]
    Example: /experiment-init boltz2_aptamer_analysis --description "Structural comparison of aptamer variants" --domain "structural-biology,computational"
    ```
 
-2. **Check existing structure.** Look for `01-documentation/` or `INDEX.md` in the current directory. If found, warn the user that an experiment project structure already exists and ask whether to:
+2. **Validate project name.** Apply naming validation (see above). Normalize if needed.
+
+3. **Check existing structure.** Look for `01-documentation/` or `INDEX.md` in the current directory. If found, warn the user that an experiment project structure already exists and ask whether to:
    a. Skip (abort)
    b. Augment (add missing directories only)
    c. Overwrite (replace INDEX.md and project docs)
 
-3. **Gather missing info.** If `project_name` or `--description` were not provided, ask the user interactively.
+4. **Gather missing info.** If `project_name` or `--description` were not provided, ask the user interactively.
 
 ---
 
-## Phase 1: Create Directory Tree
+## Phase 1: Create All Files
+
+Copy these content blocks verbatim. Only substitute variables marked with `{curly_braces}`.
+
+### 1a. Directory Tree
 
 Create the following directories relative to the current working directory. Use `mkdir -p` equivalent — never fail on existing directories.
 
@@ -57,9 +85,7 @@ Create the following directories relative to the current working directory. Use 
 config/
 ```
 
----
-
-## Phase 2: Create INDEX.md
+### 1b. INDEX.md
 
 Write `01-documentation/INDEX.md` with this structure:
 
@@ -120,9 +146,7 @@ config/              Project configuration
 ```
 ````
 
----
-
-## Phase 3: Create Project CLAUDE.md (unless --minimal)
+### 1c. Project CLAUDE.md (unless --minimal)
 
 Write `.claude/CLAUDE.md` (creating `.claude/` directory if needed) with:
 
@@ -157,9 +181,7 @@ Artifacts follow: `{workstream}_{type}_{qualifier}.md`
 - Reports: `{workstream}_report.md`
 ````
 
----
-
-## Phase 4: Update .gitignore
+### 1d. .gitignore
 
 Check if `.gitignore` exists. If so, ensure it contains entries for:
 ```
@@ -187,9 +209,7 @@ __pycache__/
 
 Only add missing entries — never duplicate existing lines.
 
----
-
-## Phase 5: Create README.md (unless --minimal)
+### 1e. README.md (unless --minimal)
 
 If no `README.md` exists, create one:
 
@@ -234,7 +254,7 @@ If `README.md` exists, do not overwrite it. Print a note that the user may want 
 
 ---
 
-## Phase 6: Report
+## Phase 2: Report
 
 Print a summary of what was created:
 
@@ -257,6 +277,16 @@ Created:
 Next steps:
   /experiment-plan <workstream>  — create your first plan
 ```
+
+---
+
+## Do Not
+
+- Do not create any files not listed in Phase 1. No sample scripts, no placeholder data files.
+- Do not modify files outside the current working directory.
+- Do not run `git init` — the user manages their own git setup.
+- Do not install any packages or dependencies.
+- Do not add content beyond the templates above. Do not embellish the INDEX.md with extra sections or the README with extra badges.
 
 ---
 

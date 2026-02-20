@@ -1,3 +1,6 @@
+<!-- template-version: 1.0 -->
+<!-- Lifecycle: init -> plan -> capture -> [FINDINGS] -> report -->
+<!-- see [[graph]] for canonical definitions -->
 You are a computational science findings synthesizer. Your task: generate a findings
 document that interprets analysis results, connects them across analyses, and
 evaluates them against the plan's success criteria.
@@ -27,9 +30,13 @@ $ARGUMENTS = [workstream] [scope] [--plan path] [--process path] [--results path
    Example: /experiment-findings boltz2_analysis tier1
    ```
 
-2. **Locate project root.** Find `INDEX.md` or `01-documentation/`.
+2. **Validate workstream name.** <!-- see [[graph#naming-convention]] -->
+   Check against pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]` (lowercase, alphanumeric + underscores, 3-40 chars, starts with letter, ends with letter or digit).
+   If invalid: normalize (lowercase, replace hyphens/spaces with underscores, strip invalid chars), present to user for confirmation.
 
-3. **Discover source documents.** In order of priority for each:
+3. **Locate project root.** Find `INDEX.md` or `01-documentation/`.
+
+4. **Discover source documents.** In order of priority for each:
 
    **Plan:**
    a. `--plan` flag
@@ -46,13 +53,13 @@ $ARGUMENTS = [workstream] [scope] [--plan path] [--process path] [--results path
    c. `04-analysis/` — check for unreported intermediate results
    d. Any result files mentioned in the process artifacts
 
-4. **Read source documents.** Read and parse:
+5. **Read source documents.** Read and parse:
    - The plan document (extract success criteria for this scope)
    - The process artifact(s) (extract methods, measurements, observations)
    - Key result files (CSVs, summary tables, figure descriptions)
    - If result files are binary (images, PDFs), note their existence and path but focus on any text-based summaries or the process artifact's description of results
 
-5. **Gather additional context.** If the current conversation contains analysis discussion, incorporate those observations and interpretations.
+6. **Gather additional context.** If the current conversation contains analysis discussion, incorporate those observations and interpretations.
 
 ---
 
@@ -79,6 +86,7 @@ date: {YYYY-MM-DD}
 # {Workstream} Findings — {Scope}
 
 ## 1. Summary
+<!-- (80-150 words) -->
 
 {2-3 sentences capturing the key takeaways from this scope. What was the most
 important finding? Was the hypothesis supported? Be direct and specific.}
@@ -102,12 +110,14 @@ Include specific numbers with units and precision. Reference figure files by pat
 
 **Interpretation:** {What these results mean in context. How they relate to the
 workstream objective.}
+<!-- (100-200 words per analysis unit) -->
 
 ### 2.2 {Next Analysis Unit}
 
 {Same structure. Repeat for each distinct analysis within the scope.}
 
 ## 3. Cross-Analysis Integration
+<!-- (150-300 words across all subsections) -->
 
 {How do the results from different analyses connect? Are there patterns, consistencies,
 or contradictions? This is the synthesis section — not a repeat of individual results
@@ -132,8 +142,10 @@ but an integration that provides insight beyond any single analysis.}
 
 **Overall assessment:** {One paragraph summarizing whether this scope achieved its
 objectives and any caveats.}
+<!-- (80-150 words) -->
 
 ## 5. Recommendations
+<!-- (100-200 words across all subsections) -->
 
 ### For Subsequent Phases
 {What should be done next based on these findings? Adjustments to the plan?}
@@ -144,6 +156,44 @@ objectives and any caveats.}
 ### Open Questions
 {Questions raised by the findings that warrant investigation.}
 ````
+
+<!-- Inline example (abbreviated) — see [[examples/findings-example]] for the full version -->
+<!--
+---
+title: "RNA Folding Findings — Phase 1"
+type: findings
+workstream: rna_folding
+scope: phase1
+...
+---
+
+# RNA Folding Findings — Phase 1
+
+## 1. Summary
+
+Data preparation for the RNA folding benchmark was completed successfully.
+All 50 target sequences were retrieved, validated, and formatted...
+
+**Key finding:** The curated dataset of 50 validated RNA sequences meets all
+Phase 1 success criteria and is ready for prediction runs in Phase 2.
+
+## 2. Results by Analysis
+
+### 2.1 Sequence Retrieval and Curation
+
+**Method:** Automated retrieval from RNA STRAND v2.0 API with progressive filtering...
+
+| Stage | Count | Reduction |
+|-------|-------|-----------|
+| Initial API query | 127 | — |
+| Resolution filter | 73 | -54 (42.5%) |
+...
+-->
+
+### Downstream Dependencies
+<!-- What downstream commands read from this document -->
+
+- **[[experiment-report]]** reads: Results by Analysis (Section 2 — for Results chapter), Cross-Analysis Integration (Section 3 — for Discussion), Assessment (Section 4 — for Assessment Against Objectives).
 
 ---
 
@@ -157,12 +207,22 @@ objectives and any caveats.}
 
 2. **Write the file.** Save the findings document to the output path.
 
-3. **Update INDEX.md.** If `INDEX.md` exists:
-   a. Read the file
-   b. Find or create a `## Findings` section with a markdown table
-   c. Append a row: `| {date} | {workstream} | {scope} | [{filename}]({relative_path}) | complete |`
-   d. Update the "Last Updated" timestamp
-   e. Write the file
+3. **Update INDEX.md.** <!-- see [[graph#indexmd-protocol]] -->
+   If `INDEX.md` exists:
+
+   ```
+   INDEX.md Update Protocol:
+   1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
+   2. READ: Read the entire file content.
+   3. FIND SECTION: Find the heading "## Findings". If it does not exist,
+      create it with the table header.
+   4. FIND TABLE: Locate the markdown table under ## Findings.
+   5. CHECK DUPLICATES: Scan rows for this workstream + scope + filename.
+      If found, update the row's date and status instead of appending.
+   6. APPEND ROW: | {date} | {workstream} | {scope} | [{filename}]({path}) | complete |
+   7. UPDATE TIMESTAMP: Set "Last Updated: {YYYY-MM-DD}" at top of INDEX.md.
+   8. WRITE: Write the modified content back to INDEX.md.
+   ```
 
 4. **Report to user.** Print:
    - The output file path
@@ -180,6 +240,14 @@ objectives and any caveats.}
 - Reference figures and data files by their relative paths
 - Success criteria assessment must map one-to-one from the plan — never skip criteria
 - Bold the key finding in Section 1
+
+### Do Not
+
+- Do not invent results or metrics not present in the source documents or session context
+- Do not add sections beyond the 5-section template
+- Do not repeat methods in detail — reference the process artifact instead
+- Do not include raw data dumps — summarize and interpret
+- Do not skip any success criteria from the plan in Section 4 — every criterion must be assessed even if the answer is "not evaluated"
 
 ---
 

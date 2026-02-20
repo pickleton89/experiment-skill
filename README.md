@@ -1,16 +1,22 @@
 # experiment-skill
 
-A Claude Code skill suite for managing the full lifecycle of computational science documentation: adopt, plan, capture, findings, report.
+A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill suite for managing the full lifecycle of computational science documentation: adopt, plan, capture, findings, report. Each command is a markdown prompt template that Claude Code executes as a slash command.
+
+## Prerequisites
+
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
 
 ## Install
 
 ```bash
-git clone <this-repo> ~/projects/experiment-skill
+git clone https://github.com/pickleton89/experiment-skill.git ~/projects/experiment-skill
 cd ~/projects/experiment-skill
 ./install.sh
 ```
 
 This creates symlinks in `~/.claude/commands/` so the commands are available in any Claude Code session.
+
+Verify the install by running `/experiment-init --help` in a Claude Code session.
 
 To remove:
 
@@ -33,7 +39,7 @@ To remove:
 
 ### 0. Adopt an existing project (optional)
 
-```
+```bash
 /experiment-adopt ./my-existing-project --deep
 ```
 
@@ -41,7 +47,7 @@ Scans an existing project directory, classifies artifacts, identifies documentat
 
 ### 1. Initialize a project
 
-```
+```bash
 /experiment-init my_project --description "Structural comparison of aptamer variants"
 ```
 
@@ -49,7 +55,7 @@ Creates the numbered directory tree (`01-documentation/` through `07-publication
 
 ### 2. Create a plan
 
-```
+```bash
 /experiment-plan boltz2_analysis
 ```
 
@@ -57,7 +63,7 @@ Interactive: walks through objectives, phases, expected outputs, and success cri
 
 ### 3. Capture process artifacts
 
-```
+```bash
 /experiment-capture boltz2_analysis tier1
 ```
 
@@ -65,7 +71,7 @@ Extracts commands, scripts, data lineage, measurements, decisions, and issues fr
 
 ### 4. Generate findings
 
-```
+```bash
 /experiment-findings boltz2_analysis tier1
 ```
 
@@ -73,7 +79,7 @@ Reads result files, process artifacts, and plan success criteria. Produces a 5-s
 
 ### 5. Compile report
 
-```
+```bash
 /experiment-report boltz2_analysis
 ```
 
@@ -118,3 +124,7 @@ See [docs/design.md](docs/design.md) for the full design document.
 ## Changelog
 
 See [docs/changelog.md](docs/changelog.md).
+
+## License
+
+[MIT](LICENSE)

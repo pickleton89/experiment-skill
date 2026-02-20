@@ -10,6 +10,7 @@ Single source of truth for command relationships, canonical definitions, and nav
 
 | Command | Purpose | Output Location | Sections |
 |---------|---------|----------------|----------|
+| [[experiment-adopt]] | Audit existing project for lifecycle onboarding | `01-documentation/` or project root | 6 sections |
 | [[experiment-init]] | Scaffold project structure | `01-documentation/` tree | 3-phase (context, create, report) |
 | [[experiment-plan]] | Define objectives, phases, success criteria | `01-documentation/plans/` | 6 sections |
 | [[experiment-capture]] | Record process artifact from session | `01-documentation/process/` | 8 sections |
@@ -21,10 +22,12 @@ Single source of truth for command relationships, canonical definitions, and nav
 ## Lifecycle Diagram
 
 ```
-init -> plan -> [execute work] -> capture -> findings -> report
-                                    ^                      |
-                                    \--- next phase ------/
+[existing project] -> adopt -> init (overlay) -> plan -> [execute work] -> capture -> findings -> report
+                                                                            ^                      |
+                                                                            \--- next phase ------/
 ```
+
+Adopt is a PRE-lifecycle command for existing projects. It produces a read-only audit report that guides the user into the standard lifecycle. For new projects, start directly with init.
 
 Each cycle through `capture -> findings` corresponds to one plan phase/tier. The report integrates all findings into a single deliverable.
 
@@ -32,6 +35,7 @@ Each cycle through `capture -> findings` corresponds to one plan phase/tier. The
 
 | From | To | Trigger |
 |------|----|---------|
+| adopt | init | Adoption report reviewed, user ready to create structure |
 | init | plan | Project structure exists |
 | plan | execute | Plan is `active` |
 | execute | capture | Phase work is complete or at a checkpoint |
@@ -45,6 +49,11 @@ Each cycle through `capture -> findings` corresponds to one plan phase/tier. The
 
 ```
                     +-----------+
+                    |   adopt   |  reads: project directory, git history
+                    |           |  creates: {workstream}_adoption.md
+                    +-----+-----+
+                          |
+                    +-----v-----+
                     |   init    |  creates: directory tree, INDEX.md, CLAUDE.md
                     +-----+-----+
                           |
@@ -74,6 +83,7 @@ Each cycle through `capture -> findings` corresponds to one plan phase/tier. The
 
 | Consumer | Source | Sections Read |
 |----------|--------|---------------|
+| adopt | project directory | File tree, file metadata, git history (if --deep) |
 | capture | plan | Phase definitions (scope, outputs, checkpoint triggers, success criteria) |
 | findings | plan | Success criteria tables (Section 5, per-phase Section 3 criteria) |
 | findings | process | Methods (Section 3), Measurements (Section 6), Decisions (Section 5) |
@@ -106,6 +116,7 @@ All artifacts follow the pattern:
 
 | Type | Command | Example |
 |------|---------|---------|
+| `adoption` | experiment-adopt | `protein_docking_adoption.md` |
 | `plan` | experiment-plan | `rna_folding_plan.md` |
 | `process` | experiment-capture | `rna_folding_process_phase1.md` |
 | `findings` | experiment-findings | `rna_folding_findings_phase1.md` |
@@ -133,22 +144,23 @@ pending | active | in-progress | complete | superseded
 
 <!-- anchor: indexmd-protocol -->
 
-Every lifecycle command (plan, capture, findings, report) updates INDEX.md using this canonical 8-step protocol. Copy this block verbatim — do not paraphrase or abbreviate.
+Every lifecycle command (adopt, plan, capture, findings, report) updates INDEX.md using this canonical 8-step protocol. Copy this block verbatim — do not paraphrase or abbreviate.
 
 ```
 INDEX.md Update Protocol:
 
 1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
 2. READ: Read the entire file content.
-3. FIND SECTION: Find the target section heading (## Plans, ## Process Artifacts,
-   ## Findings, or ## Reports). If the section does not exist, create it with
-   the appropriate table header.
+3. FIND SECTION: Find the target section heading (## Adoptions, ## Plans,
+   ## Process Artifacts, ## Findings, or ## Reports). If the section does not
+   exist, create it with the appropriate table header.
 4. FIND TABLE: Locate the markdown table under that section heading.
 5. CHECK DUPLICATES: Scan existing rows for a row matching this workstream +
    qualifier + filename. If found, update the row's date and status instead
    of appending.
 6. APPEND ROW: Add a new row to the table with the format specified for that
    section type:
+   - Adoptions: | {date} | {workstream} | [{filename}]({path}) | {status} |
    - Plans:    | {date} | {workstream} | [{filename}]({path}) | {status} |
    - Process:  | {date} | {workstream} | {qualifier} | [{filename}]({path}) | {status} |
    - Findings: | {date} | {workstream} | {scope} | [{filename}]({path}) | {status} |
@@ -168,6 +180,7 @@ Wikilinks use `[[ ]]` syntax for graph navigation between and within files.
 
 | Wikilink | Resolves To |
 |----------|-------------|
+| `[[experiment-adopt]]` | `.claude/commands/experiment-adopt.md` |
 | `[[experiment-init]]` | `.claude/commands/experiment-init.md` |
 | `[[experiment-plan]]` | `.claude/commands/experiment-plan.md` |
 | `[[experiment-capture]]` | `.claude/commands/experiment-capture.md` |
@@ -177,6 +190,7 @@ Wikilinks use `[[ ]]` syntax for graph navigation between and within files.
 | `[[graph#naming-convention]]` | `docs/graph.md` Section: Naming Convention |
 | `[[graph#status-values]]` | `docs/graph.md` Section: Status Values |
 | `[[graph#indexmd-protocol]]` | `docs/graph.md` Section: INDEX.md Update Protocol |
+| `[[examples/adopt-example]]` | `examples/adopt-example.md` |
 | `[[examples/plan-example]]` | `examples/plan-example.md` |
 | `[[examples/capture-example]]` | `examples/capture-example.md` |
 | `[[examples/findings-example]]` | `examples/findings-example.md` |
@@ -191,10 +205,11 @@ Wikilinks use `[[ ]]` syntax for graph navigation between and within files.
 
 ## Example File Index
 
-All examples use the `rna_folding` workstream (3 phases: data preparation, structure prediction, validation) so readers can trace data across the full lifecycle.
+Lifecycle examples use the `rna_folding` workstream (3 phases: data preparation, structure prediction, validation) so readers can trace data across the full lifecycle. The adoption example uses `protein_docking` (a hypothetical mid-stream project with no existing documentation).
 
 | Example | Lifecycle Stage | File |
 |---------|----------------|------|
+| Adoption | adopt | [[examples/adopt-example]] |
 | Plan | plan | [[examples/plan-example]] |
 | Process artifact | capture | [[examples/capture-example]] |
 | Findings | findings | [[examples/findings-example]] |

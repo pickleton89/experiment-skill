@@ -7,6 +7,7 @@ set -euo pipefail
 TARGET_DIR="${HOME}/.claude/commands"
 
 COMMANDS=(
+  experiment-adopt.md
   experiment-init.md
   experiment-plan.md
   experiment-capture.md

@@ -1,6 +1,6 @@
 # experiment-skill
 
-A Claude Code skill suite for managing the full lifecycle of computational science documentation: plan, capture, findings, report.
+A Claude Code skill suite for managing the full lifecycle of computational science documentation: adopt, plan, capture, findings, report.
 
 ## Install
 
@@ -22,6 +22,7 @@ To remove:
 
 | Command | Purpose | Output Location |
 |---------|---------|----------------|
+| `/experiment-adopt` | Audit existing project for lifecycle onboarding | `01-documentation/` or project root |
 | `/experiment-init` | Scaffold project directory structure | `01-documentation/`, `02-scripts/`, ... |
 | `/experiment-plan` | Create structured plan with phases & success criteria | `01-documentation/plans/` |
 | `/experiment-capture` | Generate process artifact from session context | `01-documentation/process/` |
@@ -29,6 +30,14 @@ To remove:
 | `/experiment-report` | Compile comprehensive report from findings | `06-reports/` |
 
 ## Usage
+
+### 0. Adopt an existing project (optional)
+
+```
+/experiment-adopt ./my-existing-project --deep
+```
+
+Scans an existing project directory, classifies artifacts, identifies documentation gaps, and produces a read-only adoption report with a prioritized onboarding roadmap. Use this before `init` when adopting a mid-stream project.
 
 ### 1. Initialize a project
 
@@ -73,10 +82,12 @@ Integrates all findings into an IMRAD-style report at `06-reports/boltz2_analysi
 ## Lifecycle
 
 ```
-Plan -> Execute -> Capture -> Findings -> Report
-  \                  ^
-   \--- phase n ----/
+[existing project] -> Adopt -> Init -> Plan -> Execute -> Capture -> Findings -> Report
+                                                            ^                      |
+                                                            \--- next phase ------/
 ```
+
+For new projects, start with `init`. For existing mid-stream projects, start with `adopt` to audit and plan onboarding.
 
 Each command reads and updates `01-documentation/INDEX.md` to maintain a documentation registry across the project.
 
@@ -93,7 +104,8 @@ Examples: `boltz2_analysis_plan.md`, `boltz2_analysis_process_tier1.md`, `boltz2
 ## Graph and Examples
 
 - **[docs/graph.md](docs/graph.md)** — Hub document with command relationships, data flow map, canonical definitions (naming convention, status enum, INDEX.md update protocol), and wikilink resolution convention.
-- **[examples/](examples/)** — Full synthetic examples for each lifecycle stage, all using the `rna_folding` workstream so readers can trace data across the full lifecycle:
+- **[examples/](examples/)** — Full synthetic examples — `rna_folding` for lifecycle stages, `protein_docking` for adoption:
+  - `adopt-example.md` — adoption report for a mid-stream docking benchmark
   - `plan-example.md` — 3-phase plan (data prep, prediction, validation)
   - `capture-example.md` — 8-section process artifact for phase 1
   - `findings-example.md` — findings with 2 analysis units

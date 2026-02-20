@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code skill suite for computational science documentation. Five slash commands (`/experiment-init`, `-plan`, `-capture`, `-findings`, `-report`) manage the full lifecycle from project scaffolding through final report. The skill is pure markdown — no Python runtime. Each command is a `.md` file in `.claude/commands/` that Claude Code executes as a prompt template.
+A Claude Code skill suite for computational science documentation. Six slash commands (`/experiment-adopt`, `-init`, `-plan`, `-capture`, `-findings`, `-report`) manage the full lifecycle from existing project onboarding through final report. The skill is pure markdown — no Python runtime. Each command is a `.md` file in `.claude/commands/` that Claude Code executes as a prompt template.
 
 ## Installation and Testing
 
@@ -38,10 +38,12 @@ All commands share these behaviors:
 ### Lifecycle flow and artifact linkage
 
 ```
-init -> plan -> [execute work] -> capture -> findings -> report
-                                    ^                      |
-                                    \--- next phase ------/
+[existing project] -> adopt -> init (overlay) -> plan -> [execute work] -> capture -> findings -> report
+                                                                            ^                      |
+                                                                            \--- next phase ------/
 ```
+
+For new projects, start with `init`. For existing mid-stream projects, start with `adopt` to audit and plan onboarding.
 
 Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`. The workstream prefix ties a plan to its process artifacts, findings, and report. The qualifier maps to plan phases/tiers.
 
@@ -67,7 +69,7 @@ Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`. The 
 ## Graph Hub and Examples
 
 - **`docs/graph.md`** — Single source of truth for command relationships, canonical definitions (naming convention, status enum, INDEX.md update protocol), wikilink resolution convention, and data flow dependencies. All commands reference this file via `[[graph]]` wikilinks.
-- **`examples/`** — Full synthetic examples using the `rna_folding` workstream, one per lifecycle stage. Commands reference these via inline abbreviated examples + wikilinks to the full versions.
+- **`examples/`** — Full synthetic examples — `rna_folding` for lifecycle stages (plan, capture, findings, report), `protein_docking` for adoption. Commands reference these via inline abbreviated examples + wikilinks to the full versions.
 
 ## Editing Commands
 
@@ -84,7 +86,7 @@ When modifying a command file, preserve:
 
 The embedded template (inside the fenced code block in Phase 1) defines the output document structure. Section numbering, YAML frontmatter fields, and table schemas are the contract — downstream commands depend on them (e.g., `/experiment-findings` reads process artifact tables; `/experiment-report` reads findings structure).
 
-When updating the INDEX.md protocol, update it in `docs/graph.md` first (the canonical source), then propagate the identical block to all 4 lifecycle commands (plan, capture, findings, report).
+When updating the INDEX.md protocol, update it in `docs/graph.md` first (the canonical source), then propagate the identical block to all 5 lifecycle commands (adopt, plan, capture, findings, report).
 
 ## Shell Script Gotcha
 

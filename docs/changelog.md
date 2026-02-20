@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-02-20 — Add `/experiment-adopt` command
+
+- Created `.claude/commands/experiment-adopt.md` — pre-lifecycle command for onboarding existing mid-stream research projects
+  - 6-section adoption report: audit summary, artifact inventory, workstream decomposition, gap analysis, adoption roadmap, file migration plan
+  - Read-only: never moves, renames, or creates project files (only writes the adoption report)
+  - Supports `--deep` flag for git history decision archaeology and `--git-history N` for commit depth
+  - On-demand `## Adoptions` INDEX.md section (created by adopt, not pre-baked into init)
+  - Follows Phase 0/1/2 pattern with embedded template, naming validation, and graceful degradation
+- Created `examples/adopt-example.md` — `protein_docking` workstream (hypothetical docking benchmark with scripts, data, results, no docs)
+- Updated `docs/graph.md`:
+  - Added adopt to command overview table, lifecycle diagram, phase transitions, data flow, naming types, INDEX.md protocol row formats, wikilink resolution table, and example index
+- Updated `install.sh` and `uninstall.sh` — added `experiment-adopt.md` to COMMANDS array
+- Updated `CLAUDE.md` — updated command count, lifecycle diagram, and examples description to include adopt
+- Updated `README.md` — added adopt to commands table, usage section, lifecycle diagram, and examples list
+- Fixed Phase 0 step 1 contradiction: empty `$ARGUMENTS` now proceeds with `.` as default project path (consistent with Handling Incomplete Context)
+- Fixed `docs/graph.md` INDEX.md protocol: added "adopt" to intro text and "## Adoptions" to step 3 section enumeration
+
+## 2026-02-20 — Scaffold Detection in experiment-init
+
+- Added three-tier detection in Phase 0 step 3 to detect `project-scaffold` projects:
+  - **Tier A** — Scaffold fingerprints: `- **Type**:` line in CLAUDE.md, `.gitkeep` files, subdirectory READMEs
+  - **Tier B** — Existing experiment structure: INDEX.md in `01-documentation/` or project root
+  - **Tier C** — Bare directory overlap: `01-documentation/` without INDEX.md or scaffold markers
+- When scaffold detected: skip redundant directory creation, append `## Experiment Lifecycle` section to existing CLAUDE.md (idempotent), create only INDEX.md and missing dirs (typically `06-reports/findings/`)
+- Phase 1c now branches: scaffold path appends to `scaffold_claude_path` (root or `.claude/`); non-scaffold path writes fresh `.claude/CLAUDE.md`
+- Phase 2 report distinguishes "Added" vs "Pre-existing (preserved)" when scaffold detected, with dynamic CLAUDE.md status line
+- `--overwrite` flag explicitly noted as ignored for scaffold projects (overlay is non-destructive)
+- Added scaffold overlay as first bullet in Handling Edge Cases section
+
 ## 2026-02-20 — Wikilinks, Examples, Determinism
 
 - Created `docs/graph.md` — hub document with command overview, lifecycle diagram, data flow map, canonical definitions (naming convention, status enum, INDEX.md 8-step update protocol), and wikilink resolution convention

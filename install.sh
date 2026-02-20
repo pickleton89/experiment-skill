@@ -9,6 +9,7 @@ SOURCE_DIR="${SCRIPT_DIR}/.claude/commands"
 TARGET_DIR="${HOME}/.claude/commands"
 
 COMMANDS=(
+  experiment-adopt.md
   experiment-init.md
   experiment-plan.md
   experiment-capture.md
@@ -59,4 +60,4 @@ done
 
 echo ""
 echo "Done: ${installed} installed, ${skipped} skipped"
-echo "Commands available as: /experiment-init, /experiment-plan, /experiment-capture, /experiment-findings, /experiment-report"
+echo "Commands available as: /experiment-adopt, /experiment-init, /experiment-plan, /experiment-capture, /experiment-findings, /experiment-report"

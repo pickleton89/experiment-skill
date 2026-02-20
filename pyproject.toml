@@ -1,0 +1,7 @@
+[project]
+name = "experiment-skill"
+version = "0.1.0"
+description = "A Claude Code skill for managing the full lifecycle of computational science documentation"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []

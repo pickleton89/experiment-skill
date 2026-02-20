@@ -19,3 +19,6 @@ scratch/
 .idea/
 .vscode/
 *.swp
+
+# Test output
+test-project/

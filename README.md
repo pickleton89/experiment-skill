@@ -1,28 +1,99 @@
 # experiment-skill
 
-A Claude Code skill (`/experiment`) for managing the full lifecycle of computational science documentation.
+A Claude Code skill suite for managing the full lifecycle of computational science documentation: plan, capture, findings, report.
 
-## Overview
-
-`/experiment` provides standardized project scaffolding, plan creation, process artifact capture, findings synthesis, and report compilation for computational science workflows.
-
-### Subcommands
-
-| Command | Purpose |
-|---------|---------|
-| `/experiment init` | Scaffold project structure and install templates |
-| `/experiment plan` | Create a structured plan with phases and checkpoints |
-| `/experiment capture` | Generate a process artifact from current session context |
-| `/experiment findings` | Generate a findings document from analysis results |
-| `/experiment report` | Compile comprehensive research report |
-
-## Development
+## Install
 
 ```bash
-uv sync
-uv run python main.py
+git clone <this-repo> ~/projects/experiment-skill
+cd ~/projects/experiment-skill
+./install.sh
 ```
+
+This creates symlinks in `~/.claude/commands/` so the commands are available in any Claude Code session.
+
+To remove:
+
+```bash
+./uninstall.sh
+```
+
+## Commands
+
+| Command | Purpose | Output Location |
+|---------|---------|----------------|
+| `/experiment-init` | Scaffold project directory structure | `01-documentation/`, `02-scripts/`, ... |
+| `/experiment-plan` | Create structured plan with phases & success criteria | `01-documentation/plans/` |
+| `/experiment-capture` | Generate process artifact from session context | `01-documentation/process/` |
+| `/experiment-findings` | Synthesize results into findings document | `06-reports/findings/` |
+| `/experiment-report` | Compile comprehensive report from findings | `06-reports/` |
+
+## Usage
+
+### 1. Initialize a project
+
+```
+/experiment-init my_project --description "Structural comparison of aptamer variants"
+```
+
+Creates the numbered directory tree (`01-documentation/` through `07-publication/`), `INDEX.md`, project `CLAUDE.md`, and `README.md`.
+
+### 2. Create a plan
+
+```
+/experiment-plan boltz2_analysis
+```
+
+Interactive: walks through objectives, phases, expected outputs, and success criteria. Writes to `01-documentation/plans/boltz2_analysis_plan.md`.
+
+### 3. Capture process artifacts
+
+```
+/experiment-capture boltz2_analysis tier1
+```
+
+Extracts commands, scripts, data lineage, measurements, decisions, and issues from the current conversation. Writes an 8-section process artifact to `01-documentation/process/boltz2_analysis_process_tier1.md`.
+
+### 4. Generate findings
+
+```
+/experiment-findings boltz2_analysis tier1
+```
+
+Reads result files, process artifacts, and plan success criteria. Produces a 5-section findings document at `06-reports/findings/boltz2_analysis_findings_tier1.md`.
+
+### 5. Compile report
+
+```
+/experiment-report boltz2_analysis
+```
+
+Integrates all findings into an IMRAD-style report at `06-reports/boltz2_analysis_report.md`. Optional `--oligon` flag generates branded PDF via pandoc.
+
+## Lifecycle
+
+```
+Plan -> Execute -> Capture -> Findings -> Report
+  \                  ^
+   \--- phase n ----/
+```
+
+Each command reads and updates `01-documentation/INDEX.md` to maintain a documentation registry across the project.
+
+## Naming Convention
+
+All artifacts use a linked naming scheme:
+
+```
+{workstream}_{type}_{qualifier}.md
+```
+
+Examples: `boltz2_analysis_plan.md`, `boltz2_analysis_process_tier1.md`, `boltz2_analysis_findings_tier1.md`, `boltz2_analysis_report.md`
 
 ## Design
 
-See [experiment-skill-design.md](experiment-skill-design.md) for the full design document.
+See [docs/design.md](docs/design.md) for the full design document.
+
+## Changelog
+
+See [docs/changelog.md](docs/changelog.md).

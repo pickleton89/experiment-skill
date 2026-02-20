@@ -2,6 +2,9 @@
 
 ## 2026-02-20 — Per-project install and update mechanism
 
+- Removed unused `BREADCRUMB` variable from `install.sh`
+- Fixed README uninstall commands to use full paths (matching install pattern)
+- Clarified CLAUDE.md common commands: split into "from skill repo" vs "from project" groups
 - Rewrote `install.sh` — default is now local install to `$PWD/.claude/commands/` (per-project)
   - `--global` flag preserves old behavior (install to `~/.claude/commands/`)
   - `--help` flag for usage

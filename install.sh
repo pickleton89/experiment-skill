@@ -11,7 +11,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="${SCRIPT_DIR}/.claude/commands"
-BREADCRUMB=".claude/.experiment-skill-source"
 
 COMMANDS=(
   experiment-adopt.md

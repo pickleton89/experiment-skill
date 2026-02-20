@@ -18,11 +18,14 @@ The skill is pure markdown — no Python runtime. Each command is a `.md` file i
 ## Common Commands
 
 ```bash
+# Run from skill repo (targeting the current project):
 ./install.sh               # install into current project (default: local)
 ./install.sh --global      # install to ~/.claude/commands/ (all sessions)
-.claude/update-experiment-skill.sh   # update project from skill repo
 ./uninstall.sh             # remove from current project
 ./uninstall.sh --global    # remove from ~/.claude/commands/
+
+# Run from any installed project:
+.claude/update-experiment-skill.sh   # update project from skill repo
 ```
 
 Both scripts are idempotent and safe (won't overwrite non-symlink files). Local installs create `.claude/update-experiment-skill.sh` (wrapper that re-runs install from the saved source path). There is no build step, linter, or test suite — validation is manual by invoking commands in Claude Code.

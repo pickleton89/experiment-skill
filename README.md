@@ -34,9 +34,9 @@ The update script is created during install and remembers where the skill repo l
 ### Other options
 
 ```bash
-~/projects/experiment-skill/install.sh --global   # install to ~/.claude/commands/ (all sessions)
-./uninstall.sh            # remove from current project (run from skill repo)
-./uninstall.sh --global   # remove from ~/.claude/commands/
+~/projects/experiment-skill/install.sh --global       # install to ~/.claude/commands/ (all sessions)
+~/projects/experiment-skill/uninstall.sh              # remove from current project
+~/projects/experiment-skill/uninstall.sh --global     # remove from ~/.claude/commands/
 ```
 
 ## Commands

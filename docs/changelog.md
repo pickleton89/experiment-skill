@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-02-20 — README and CLAUDE.md improvements
+
+- Rewrote `CLAUDE.md` (94 → 81 lines) following best practices:
+  - Replaced inline command list with scannable table
+  - Added "Common Commands" and "Key Files" sections for fast onboarding
+  - Removed duplicated content (target project structure, shared behaviors list)
+  - Fixed stale "stop on empty args" bullet (not true for adopt)
+  - Consolidated design decisions and gotchas
+- Improved `README.md`:
+  - Added Prerequisites section linking to Claude Code docs
+  - Fixed placeholder clone URL to actual GitHub repo
+  - Added install verification step
+  - Added `bash` language specifier to all code blocks
+  - Added License section
+- Added MIT `LICENSE` file
+
 ## 2026-02-20 — Add `/experiment-adopt` command
 
 - Created `.claude/commands/experiment-adopt.md` — pre-lifecycle command for onboarding existing mid-stream research projects

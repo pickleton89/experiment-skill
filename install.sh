@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
-# install.sh — Symlink experiment skill commands to ~/.claude/commands/
+# install.sh — Install experiment skill commands into a project or globally.
+#
+# Default:   local install to $PWD/.claude/commands/ (per-project)
+# --global:  install to ~/.claude/commands/ (available in all sessions)
+#
+# Local installs create .claude/update-experiment-skill.sh for easy updates.
 # Safe: won't overwrite non-symlink files. Idempotent.
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_DIR="${SCRIPT_DIR}/.claude/commands"
-TARGET_DIR="${HOME}/.claude/commands"
+BREADCRUMB=".claude/.experiment-skill-source"
 
 COMMANDS=(
   experiment-adopt.md
@@ -16,6 +21,31 @@ COMMANDS=(
   experiment-findings.md
   experiment-report.md
 )
+
+# Parse flags
+MODE="local"
+for arg in "$@"; do
+  case "$arg" in
+    --global) MODE="global" ;;
+    --help|-h)
+      echo "Usage: install.sh [--global]"
+      echo ""
+      echo "  (default)   Install into current project (.claude/commands/)"
+      echo "  --global    Install into ~/.claude/commands/ (all sessions)"
+      echo ""
+      echo "Local installs create .claude/update-experiment-skill.sh for updates."
+      exit 0
+      ;;
+    *) echo "Unknown flag: $arg (use --help for usage)"; exit 1 ;;
+  esac
+done
+
+# Determine target directory
+if [[ "$MODE" == "global" ]]; then
+  TARGET_DIR="${HOME}/.claude/commands"
+else
+  TARGET_DIR="${PWD}/.claude/commands"
+fi
 
 # Verify source files exist
 missing=0
@@ -58,6 +88,40 @@ for cmd in "${COMMANDS[@]}"; do
   fi
 done
 
+# For local installs: write breadcrumb and update wrapper
+if [[ "$MODE" == "local" ]]; then
+  CLAUDE_DIR="${TARGET_DIR%/commands}"
+
+  # Breadcrumb: records skill repo path for update wrapper
+  echo "${SCRIPT_DIR}" > "${CLAUDE_DIR}/.experiment-skill-source"
+
+  # Update wrapper: lets users re-run install from the project directory
+  cat > "${CLAUDE_DIR}/update-experiment-skill.sh" <<'WRAPPER'
+#!/usr/bin/env bash
+set -euo pipefail
+BREADCRUMB="$(cd "$(dirname "$0")" && pwd)/.experiment-skill-source"
+if [[ ! -f "$BREADCRUMB" ]]; then
+  echo "ERROR: No experiment-skill source found. Re-install from the skill repo."
+  exit 1
+fi
+SKILL_REPO="$(cat "$BREADCRUMB")"
+if [[ ! -f "${SKILL_REPO}/install.sh" ]]; then
+  echo "ERROR: Skill repo not found at: $SKILL_REPO"
+  echo "Has it moved? Re-install from the new location."
+  exit 1
+fi
+echo "Updating from: $SKILL_REPO"
+exec "${SKILL_REPO}/install.sh"
+WRAPPER
+  chmod +x "${CLAUDE_DIR}/update-experiment-skill.sh"
+fi
+
 echo ""
 echo "Done: ${installed} installed, ${skipped} skipped"
-echo "Commands available as: /experiment-adopt, /experiment-init, /experiment-plan, /experiment-capture, /experiment-findings, /experiment-report"
+if [[ "$MODE" == "local" ]]; then
+  echo "Installed to: ${TARGET_DIR}"
+  echo "To update later: .claude/update-experiment-skill.sh"
+else
+  echo "Installed globally to: ${TARGET_DIR}"
+fi
+echo "Commands: /experiment-adopt, -init, -plan, -capture, -findings, -report"

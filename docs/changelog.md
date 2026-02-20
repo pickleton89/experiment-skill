@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-02-20 — Per-project install and update mechanism
+
+- Rewrote `install.sh` — default is now local install to `$PWD/.claude/commands/` (per-project)
+  - `--global` flag preserves old behavior (install to `~/.claude/commands/`)
+  - `--help` flag for usage
+  - Creates `.claude/update-experiment-skill.sh` wrapper during local install for easy updates
+  - Writes `.claude/.experiment-skill-source` breadcrumb recording skill repo path
+- Rewrote `uninstall.sh` — default is now local uninstall from `$PWD/.claude/commands/`
+  - `--global` flag for old behavior
+  - Cleans up breadcrumb and update wrapper on local uninstall
+- Updated `README.md` install section with per-project workflow and update instructions
+- Updated `CLAUDE.md` common commands section
+
 ## 2026-02-20 — README and CLAUDE.md improvements
 
 - Rewrote `CLAUDE.md` (94 → 81 lines) following best practices:

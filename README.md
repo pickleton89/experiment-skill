@@ -8,20 +8,35 @@ A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill suite for 
 
 ## Install
 
+Clone the skill repo once, then install into any project:
+
 ```bash
 git clone https://github.com/pickleton89/experiment-skill.git ~/projects/experiment-skill
-cd ~/projects/experiment-skill
-./install.sh
+
+# Install into your project (from the project directory)
+cd /path/to/my-project
+~/projects/experiment-skill/install.sh
 ```
 
-This creates symlinks in `~/.claude/commands/` so the commands are available in any Claude Code session.
+This creates symlinks in your project's `.claude/commands/` so the commands are available when working in that project. Verify by running `/experiment-init --help` in a Claude Code session.
 
-Verify the install by running `/experiment-init --help` in a Claude Code session.
+### Updating
 
-To remove:
+When the skill repo gets new commands or updates:
 
 ```bash
-./uninstall.sh
+cd ~/projects/experiment-skill && git pull            # pull latest
+cd /path/to/my-project && .claude/update-experiment-skill.sh   # update project
+```
+
+The update script is created during install and remembers where the skill repo lives.
+
+### Other options
+
+```bash
+~/projects/experiment-skill/install.sh --global   # install to ~/.claude/commands/ (all sessions)
+./uninstall.sh            # remove from current project (run from skill repo)
+./uninstall.sh --global   # remove from ~/.claude/commands/
 ```
 
 ## Commands

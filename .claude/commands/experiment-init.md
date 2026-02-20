@@ -38,10 +38,29 @@ Apply the naming convention from [[graph#naming-convention]]. If `project_name` 
 
 2. **Validate project name.** Apply naming validation (see above). Normalize if needed.
 
-3. **Check existing structure.** Look for `01-documentation/` or `INDEX.md` in the current directory. If found, warn the user that an experiment project structure already exists and ask whether to:
+3. **Check existing structure.** Perform three-tier detection in order:
+
+   **Tier A — Scaffold detection.** Check for `project-scaffold` fingerprints. A project is scaffold-generated if **any** of these are true:
+   - `.claude/CLAUDE.md` or root `CLAUDE.md` contains a `- **Type**:` line
+   - `.gitkeep` files exist in data directories (`03-data/raw/.gitkeep`, `03-data/reference/.gitkeep`)
+   - Subdirectory `README.md` files exist in `01-documentation/plans/`, `03-data/raw/`, etc.
+
+   If scaffold detected, set `scaffold_detected = true`. Record which CLAUDE.md file matched (`.claude/CLAUDE.md` or root `CLAUDE.md`) as `scaffold_claude_path` for use in Phase 1c. Try to identify the profile by reading the `- **Type**:` line (e.g., "bioinformatics", "computational", "general"). If `--overwrite` was passed, print a note that it is ignored for scaffold projects (overlay is always non-destructive) and continue. Print:
+   ```
+   Detected project-scaffold structure (profile: {profile_or_unknown})
+   Existing directories will be preserved. Adding experiment lifecycle overlay:
+     - 01-documentation/INDEX.md (documentation registry)
+     - 06-reports/findings/       (if missing)
+     - CLAUDE.md updates          (experiment lifecycle sections appended)
+   ```
+   Then proceed directly to Phase 1 (no skip/augment/overwrite prompt — scaffold overlay is always safe).
+
+   **Tier B — Existing experiment structure.** If not scaffold, check for `INDEX.md` in `01-documentation/` or at the project root. If found, warn the user that an experiment project structure already exists and ask whether to:
    a. Skip (abort)
    b. Augment (add missing directories only)
    c. Overwrite (replace INDEX.md and project docs)
+
+   **Tier C — Bare directory overlap.** If not scaffold and no INDEX.md, but `01-documentation/` exists, treat as a manual or legacy setup. Warn the user and offer the same skip/augment/overwrite choice as Tier B.
 
 4. **Gather missing info.** If `project_name` or `--description` were not provided, ask the user interactively.
 
@@ -73,6 +92,8 @@ Create the following directories relative to the current working directory. Use 
 07-publication/
 config/
 ```
+
+**When `scaffold_detected` is true:** Track which directories already existed vs which were newly created. For each directory in the list above, note whether it was pre-existing or created. This tracking is used in the Phase 2 report. Typically the scaffold will have created most directories except `06-reports/findings/`, `01-documentation/templates/`, `01-documentation/notes/`, and `config/`.
 
 ### 1b. INDEX.md
 
@@ -136,6 +157,40 @@ config/              Project configuration
 ````
 
 ### 1c. Project CLAUDE.md (unless --minimal)
+
+**When `scaffold_detected` is true and an existing CLAUDE.md is found:**
+
+Locate the scaffold's CLAUDE.md using `scaffold_claude_path` from Phase 0 (either `.claude/CLAUDE.md` or root `CLAUDE.md`). Do **not** overwrite it. Check whether it already contains an `## Experiment Lifecycle` section. If it does, skip entirely. If it does not, **append** the following section to the end of that file:
+
+````markdown
+
+## Experiment Lifecycle
+
+This project uses the `/experiment` documentation lifecycle:
+- Plans: `01-documentation/plans/`
+- Process artifacts: `01-documentation/process/`
+- Findings: `06-reports/findings/`
+- Reports: `06-reports/`
+- Index: `01-documentation/INDEX.md`
+
+### Conventions
+
+- Process artifacts captured at phase/tier boundaries using `/experiment-capture`
+- All scripts in `02-scripts/` with numbered prefixes (e.g., `01_prepare_data.py`)
+- Raw data in `03-data/raw/` is immutable — never modify in place
+- Working outputs in `04-analysis/` are gitignored
+- Curated results promoted to `05-results/`
+
+### Naming
+
+Artifacts follow: `{workstream}_{type}_{qualifier}.md`
+- Plans: `{workstream}_plan.md`
+- Process: `{workstream}_process_{phase}.md`
+- Findings: `{workstream}_findings_{scope}.md`
+- Reports: `{workstream}_report.md`
+````
+
+**When `scaffold_detected` is false (or no existing CLAUDE.md):**
 
 Write `.claude/CLAUDE.md` (creating `.claude/` directory if needed) with:
 
@@ -245,7 +300,28 @@ If `README.md` exists, do not overwrite it. Print a note that the user may want 
 
 ## Phase 2: Report
 
-Print a summary of what was created:
+**When `scaffold_detected` is true:** Print a summary that distinguishes created vs pre-existing. The CLAUDE.md line should reflect what actually happened in Phase 1c:
+
+```
+Initialized experiment lifecycle on existing project-scaffold project: {project_name}
+Profile detected: {profile_or_unknown}
+
+Added:
+  01-documentation/INDEX.md   (documentation registry)
+  {list only directories that were actually created, not pre-existing}
+  {scaffold_claude_path}       {one of the following:}
+                                 (appended experiment lifecycle section)
+                                 (already contains experiment lifecycle — no changes)
+                                 (created with experiment lifecycle section)
+
+Pre-existing (preserved):
+  {list directories that already existed, grouped logically}
+
+Next steps:
+  /experiment-plan <workstream>  — create your first plan
+```
+
+**When `scaffold_detected` is false:** Print the standard summary:
 
 ```
 Initialized experiment project: {project_name}
@@ -281,7 +357,8 @@ Next steps:
 
 ## Handling Edge Cases
 
-- If run inside an existing experiment project (INDEX.md exists): only create missing directories, do not overwrite INDEX.md or CLAUDE.md unless `--overwrite` confirmed.
+- If run inside a `project-scaffold`-generated project (scaffold fingerprints detected): overlay experiment lifecycle without overwriting. Preserve existing directories, append to CLAUDE.md, create only INDEX.md and missing directories. No user prompt needed — scaffold overlay is always safe.
+- If run inside an existing experiment project (INDEX.md exists, no scaffold): only create missing directories, do not overwrite INDEX.md or CLAUDE.md unless `--overwrite` confirmed.
 - If the current directory is not empty but has no experiment structure: create the structure alongside existing files. Warn the user about any naming conflicts.
 - If `$ARGUMENTS` is empty: ask for the project name interactively, then proceed with defaults.
 

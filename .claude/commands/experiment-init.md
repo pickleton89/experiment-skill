@@ -10,29 +10,18 @@ for a new experiment-tracked project.
 `$ARGUMENTS` contains 0-1 positional arguments and optional flags:
 
 ```
-$ARGUMENTS = [project_name] [--description "text"] [--domain "tags"] [--minimal]
+$ARGUMENTS = [project_name] [--description "text"] [--domain "tags"] [--minimal] [--overwrite]
 ```
 
 - `project_name` — name for the project (used in docs and CLAUDE.md). If omitted, ask interactively.
 - `--description` — one-line project description. If omitted, ask interactively.
 - `--domain` — comma-separated domain tags (e.g., "structural-biology,computational"). If omitted, skip.
 - `--minimal` — create only the directory tree and INDEX.md, skip README and CLAUDE.md generation.
+- `--overwrite` — if an experiment structure already exists, overwrite INDEX.md and project docs instead of augmenting.
 
 ### Workstream Naming Validation
 
-<!-- see [[graph#naming-convention]] for canonical definition -->
-
-If `project_name` is provided, validate it against this pattern:
-
-```
-Pattern: [a-z][a-z0-9_]{1,38}[a-z0-9]
-```
-
-- Lowercase letters, digits, and underscores only
-- Must start with a letter, end with a letter or digit
-- Length: 3-40 characters
-
-If the name is invalid:
+Apply the naming convention from [[graph#naming-convention]]. If `project_name` is provided, validate it. If invalid:
 1. Normalize it: lowercase, replace hyphens and spaces with underscores, strip invalid characters
 2. Present the normalized version to the user for confirmation
 3. If the user rejects, ask for a new name

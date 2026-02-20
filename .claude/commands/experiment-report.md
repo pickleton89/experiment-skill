@@ -29,9 +29,7 @@ $ARGUMENTS = [workstream] [--output path] [--oligon] [--scope "phase1,phase2"] [
    Example: /experiment-report boltz2_analysis --oligon
    ```
 
-2. **Validate workstream name.** <!-- see [[graph#naming-convention]] -->
-   Check against pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]` (lowercase, alphanumeric + underscores, 3-40 chars, starts with letter, ends with letter or digit).
-   If invalid: normalize (lowercase, replace hyphens/spaces with underscores, strip invalid chars), present to user for confirmation.
+2. **Validate workstream name.** Apply the naming convention from [[graph#naming-convention]]. If invalid, normalize and present to user for confirmation.
 
 3. **Locate project root.** Find `INDEX.md` or `01-documentation/`.
 
@@ -206,33 +204,7 @@ Patterns, convergences, and contradictions across the full workstream.}
 | {findings_name} | Findings | `{path}` |
 ````
 
-<!-- Inline example (abbreviated) — see [[examples/report-example]] for the full version -->
-<!--
----
-title: "RNA Secondary Structure Prediction Benchmark Report"
-type: report
-workstream: rna_folding
-...
----
-
-# RNA Secondary Structure Prediction Benchmark Report
-
-## Executive Summary
-
-This report presents results from a systematic benchmark of three RNA secondary
-structure prediction tools — RNAfold 2.6.4, LinearFold 1.0, and EternaFold 1.2 —
-evaluated against 50 experimentally determined structures...
-
-**Principal finding:** EternaFold is the recommended tool for RNA secondary structure
-prediction, offering the best accuracy across RNA families with acceptable runtime.
-
-## 1. Introduction
-
-### 1.1 Background and Motivation
-Accurate prediction of RNA secondary structure is a prerequisite for tertiary
-structure modeling...
-...
--->
+<!-- For a worked example, see [[examples/report-example]] -->
 
 ### Downstream Dependencies
 <!-- This is the terminal command — no downstream consumers -->
@@ -269,18 +241,10 @@ This is the final command in the lifecycle. No downstream commands read from the
    If `INDEX.md` exists:
 
    ```
-   INDEX.md Update Protocol:
-   1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
-   2. READ: Read the entire file content.
-   3. FIND SECTION: Find the heading "## Reports". If it does not exist,
-      create it with the table header.
-   4. FIND TABLE: Locate the markdown table under ## Reports.
-   5. CHECK DUPLICATES: Scan rows for this workstream + filename.
-      If found, update the row's date and format instead of appending.
-   6. APPEND ROW: | {date} | {workstream} | [{filename}]({path}) | md |
-      If PDF was generated, add a second row for the PDF: | {date} | {workstream} | [{filename}]({path}) | pdf |
-   7. UPDATE TIMESTAMP: Set "Last Updated: {YYYY-MM-DD}" at top of INDEX.md.
-   8. WRITE: Write the modified content back to INDEX.md.
+   Execute the canonical INDEX.md Update Protocol from [[graph#indexmd-protocol]].
+   Target section: "## Reports"
+   Row format: | {date} | {workstream} | [{filename}]({path}) | md |
+   If PDF was generated, add a second row: | {date} | {workstream} | [{filename}]({path}) | pdf |
    ```
 
 5. **Report to user.** Print:

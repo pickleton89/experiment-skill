@@ -28,9 +28,7 @@ $ARGUMENTS = [workstream] [qualifier] [--plan path/to/plan.md] [--output path/to
    Example: /experiment-capture boltz2_analysis tier1
    ```
 
-2. **Validate workstream name.** <!-- see [[graph#naming-convention]] -->
-   Check against pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]` (lowercase, alphanumeric + underscores, 3-40 chars, starts with letter, ends with letter or digit).
-   If invalid: normalize (lowercase, replace hyphens/spaces with underscores, strip invalid chars), present to user for confirmation.
+2. **Validate workstream name.** Apply the naming convention from [[graph#naming-convention]]. If invalid, normalize and present to user for confirmation.
 
 3. **Locate project root.** Look for an `INDEX.md` file or `01-documentation/` directory to identify the project root. If not found, use the current working directory and note that no experiment project structure was detected.
 
@@ -181,41 +179,7 @@ known limitations of the results.}
 | {filename} | `{path}` | {purpose} | {md/py/csv/png/etc} |
 ````
 
-<!-- Inline example (abbreviated) — see [[examples/capture-example]] for the full version -->
-<!--
----
-title: "RNA Folding Process — Phase 1"
-type: process-artifact
-workstream: rna_folding
-plan: rna_folding_plan.md
-phase: phase1
-...
----
-
-# RNA Folding Process — Phase 1
-
-## 1. Overview
-
-This process artifact captures the data preparation phase of the RNA folding benchmark
-workstream. The objective was to download, validate, and format 50 non-coding RNA
-sequences...
-
-## 2. Execution Summary
-
-**Deliverables produced:**
-1. `03-data/raw/rna_strand_50.fasta` — curated FASTA file with 50 RNA sequences
-2. `03-data/reference/reference_structures.csv` — reference structures
-...
-
-## 3. Data and Methods
-
-### Input Data
-
-| Source | Format | Location | Description |
-|--------|--------|----------|-------------|
-| RNA STRAND v2.0 | REST API | https://rnacentral.org/api/ | RNA secondary structures |
-...
--->
+<!-- For a worked example, see [[examples/capture-example]] -->
 
 ### Downstream Dependencies
 <!-- What downstream commands read from this document -->
@@ -239,17 +203,9 @@ sequences...
    If `INDEX.md` exists at the project root or in `01-documentation/`:
 
    ```
-   INDEX.md Update Protocol:
-   1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
-   2. READ: Read the entire file content.
-   3. FIND SECTION: Find the heading "## Process Artifacts". If it does not
-      exist, create it with the table header.
-   4. FIND TABLE: Locate the markdown table under ## Process Artifacts.
-   5. CHECK DUPLICATES: Scan rows for this workstream + qualifier + filename.
-      If found, update the row's date and status instead of appending.
-   6. APPEND ROW: | {date} | {workstream} | {qualifier} | [{filename}]({path}) | {status} |
-   7. UPDATE TIMESTAMP: Set "Last Updated: {YYYY-MM-DD}" at top of INDEX.md.
-   8. WRITE: Write the modified content back to INDEX.md.
+   Execute the canonical INDEX.md Update Protocol from [[graph#indexmd-protocol]].
+   Target section: "## Process Artifacts"
+   Row format: | {date} | {workstream} | {qualifier} | [{filename}]({path}) | {status} |
    ```
 
 4. **Report to user.** Print:

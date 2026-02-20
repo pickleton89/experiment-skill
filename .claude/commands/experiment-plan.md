@@ -27,9 +27,7 @@ $ARGUMENTS = [workstream] [--output path/to/plan.md] [--phases N]
    Example: /experiment-plan boltz2_analysis
    ```
 
-2. **Validate workstream name.** <!-- see [[graph#naming-convention]] -->
-   Check against pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]` (lowercase, alphanumeric + underscores, 3-40 chars, starts with letter, ends with letter or digit).
-   If invalid: normalize (lowercase, replace hyphens/spaces with underscores, strip invalid chars), present to user for confirmation.
+2. **Validate workstream name.** Apply the naming convention from [[graph#naming-convention]]. If invalid, normalize and present to user for confirmation.
 
 3. **Locate project root.** Look for `INDEX.md` or `01-documentation/` to identify the project root. If not found, use the current working directory.
 
@@ -143,40 +141,7 @@ Phase 1 -> Phase 2 -> Phase 3
 | {risk} | {low/med/high} | {consequence} | {what to do} |
 ````
 
-<!-- Inline example (abbreviated) — see [[examples/plan-example]] for the full version -->
-<!--
----
-title: "RNA Folding Plan"
-type: plan
-workstream: rna_folding
-project: rna_structure_prediction
-date: 2026-02-15
-status: active
----
-
-# RNA Folding Plan
-
-## 1. Objective
-
-This workstream aims to evaluate the accuracy of computational RNA secondary structure
-prediction methods against experimentally determined structures. We will benchmark three
-prediction tools on a curated set of 50 non-coding RNA sequences...
-
-## 2. Background
-
-- Available data: 50 RNA sequences from the RNA STRAND database (v2.0)...
-- Tools: RNAfold 2.6.4, LinearFold 1.0, EternaFold 1.2...
-
-## 3. Phases
-
-### Phase 1: Data Preparation
-
-**Scope:** Download, validate, and format the 50 RNA sequences...
-**Expected Outputs:**
-- `03-data/raw/rna_strand_50.fasta`
-- `03-data/reference/reference_structures.csv`
-...
--->
+<!-- For a worked example, see [[examples/plan-example]] -->
 
 ### Downstream Dependencies
 <!-- What downstream commands read from this document -->
@@ -201,17 +166,9 @@ prediction tools on a curated set of 50 non-coding RNA sequences...
    If `INDEX.md` exists:
 
    ```
-   INDEX.md Update Protocol:
-   1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
-   2. READ: Read the entire file content.
-   3. FIND SECTION: Find the heading "## Plans". If it does not exist,
-      create it with the table header.
-   4. FIND TABLE: Locate the markdown table under ## Plans.
-   5. CHECK DUPLICATES: Scan rows for this workstream + filename.
-      If found, update the row's date and status instead of appending.
-   6. APPEND ROW: | {date} | {workstream} | [{filename}]({path}) | active |
-   7. UPDATE TIMESTAMP: Set "Last Updated: {YYYY-MM-DD}" at top of INDEX.md.
-   8. WRITE: Write the modified content back to INDEX.md.
+   Execute the canonical INDEX.md Update Protocol from [[graph#indexmd-protocol]].
+   Target section: "## Plans"
+   Row format: | {date} | {workstream} | [{filename}]({path}) | active |
    ```
 
 4. **Report to user.** Print:

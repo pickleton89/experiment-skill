@@ -30,9 +30,7 @@ $ARGUMENTS = [workstream] [scope] [--plan path] [--process path] [--results path
    Example: /experiment-findings boltz2_analysis tier1
    ```
 
-2. **Validate workstream name.** <!-- see [[graph#naming-convention]] -->
-   Check against pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]` (lowercase, alphanumeric + underscores, 3-40 chars, starts with letter, ends with letter or digit).
-   If invalid: normalize (lowercase, replace hyphens/spaces with underscores, strip invalid chars), present to user for confirmation.
+2. **Validate workstream name.** Apply the naming convention from [[graph#naming-convention]]. If invalid, normalize and present to user for confirmation.
 
 3. **Locate project root.** Find `INDEX.md` or `01-documentation/`.
 
@@ -157,38 +155,7 @@ objectives and any caveats.}
 {Questions raised by the findings that warrant investigation.}
 ````
 
-<!-- Inline example (abbreviated) — see [[examples/findings-example]] for the full version -->
-<!--
----
-title: "RNA Folding Findings — Phase 1"
-type: findings
-workstream: rna_folding
-scope: phase1
-...
----
-
-# RNA Folding Findings — Phase 1
-
-## 1. Summary
-
-Data preparation for the RNA folding benchmark was completed successfully.
-All 50 target sequences were retrieved, validated, and formatted...
-
-**Key finding:** The curated dataset of 50 validated RNA sequences meets all
-Phase 1 success criteria and is ready for prediction runs in Phase 2.
-
-## 2. Results by Analysis
-
-### 2.1 Sequence Retrieval and Curation
-
-**Method:** Automated retrieval from RNA STRAND v2.0 API with progressive filtering...
-
-| Stage | Count | Reduction |
-|-------|-------|-----------|
-| Initial API query | 127 | — |
-| Resolution filter | 73 | -54 (42.5%) |
-...
--->
+<!-- For a worked example, see [[examples/findings-example]] -->
 
 ### Downstream Dependencies
 <!-- What downstream commands read from this document -->
@@ -211,17 +178,9 @@ Phase 1 success criteria and is ready for prediction runs in Phase 2.
    If `INDEX.md` exists:
 
    ```
-   INDEX.md Update Protocol:
-   1. LOCATE: Find INDEX.md at project root or in 01-documentation/.
-   2. READ: Read the entire file content.
-   3. FIND SECTION: Find the heading "## Findings". If it does not exist,
-      create it with the table header.
-   4. FIND TABLE: Locate the markdown table under ## Findings.
-   5. CHECK DUPLICATES: Scan rows for this workstream + scope + filename.
-      If found, update the row's date and status instead of appending.
-   6. APPEND ROW: | {date} | {workstream} | {scope} | [{filename}]({path}) | complete |
-   7. UPDATE TIMESTAMP: Set "Last Updated: {YYYY-MM-DD}" at top of INDEX.md.
-   8. WRITE: Write the modified content back to INDEX.md.
+   Execute the canonical INDEX.md Update Protocol from [[graph#indexmd-protocol]].
+   Target section: "## Findings"
+   Row format: | {date} | {workstream} | {scope} | [{filename}]({path}) | complete |
    ```
 
 4. **Report to user.** Print:

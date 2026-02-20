@@ -10,7 +10,7 @@ Single source of truth for command relationships, canonical definitions, and nav
 
 | Command | Purpose | Output Location | Sections |
 |---------|---------|----------------|----------|
-| [[experiment-init]] | Scaffold project structure | `01-documentation/` tree | 6-phase scaffolding |
+| [[experiment-init]] | Scaffold project structure | `01-documentation/` tree | 3-phase (context, create, report) |
 | [[experiment-plan]] | Define objectives, phases, success criteria | `01-documentation/plans/` | 6 sections |
 | [[experiment-capture]] | Record process artifact from session | `01-documentation/process/` | 8 sections |
 | [[experiment-findings]] | Synthesize results into findings | `06-reports/findings/` | 5 sections |

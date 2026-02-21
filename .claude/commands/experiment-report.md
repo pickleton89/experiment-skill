@@ -1,6 +1,16 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: init -> plan -> capture -> findings -> [REPORT] -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - markdown-to-pdf: "Generate branded PDF output"
+    - scientific-slides: "Present results at meetings or conferences"
+    - paper-2-web: "Create interactive web version of report"
+  extends:
+    - oligon-brand: "Branded styling via --oligon flag"
+-->
 You are a computational science report compiler. Your task: generate a comprehensive
 research report by integrating findings, process artifacts, and plan documents into
 a polished, structured document suitable for sharing with collaborators.
@@ -252,6 +262,12 @@ This is the final command in the lifecycle. No downstream commands read from the
    - Summary of sources integrated
    - Section count and approximate word count
    - If `--oligon` PDF was generated, note the PDF path
+
+6. **Suggest next steps.** Based on the report produced, print a "Suggested next steps" block:
+   - If `--oligon` was not used and branded output is desired: `/experiment-report {workstream} --oligon` — generate branded PDF version
+   - For PDF output without branding: `/markdown-to-pdf` — convert markdown report to PDF
+   - If results need presentation: `/scientific-slides` — build presentation from report
+   - If report should be shared online: `/paper-2-web` — create interactive web version
 
 ---
 

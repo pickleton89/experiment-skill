@@ -1,6 +1,13 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: [existing project] -> [ADOPT] -> init (overlay) -> plan -> capture -> findings -> report -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - project-scaffold: "Scaffold structure suggested when project needs initialization"
+    - experiment-init: "Onboard audited project into documentation lifecycle"
+-->
 You are a computational science project auditor. Your task: scan an existing,
 mid-stream research project and produce a structured adoption report that classifies
 artifacts, identifies documentation gaps, proposes workstream structure, and generates
@@ -292,7 +299,11 @@ The adoption report is advisory — downstream commands do not parse it programm
 4. **Report to user.** Print:
    - The output file path
    - A one-line summary: number of files classified, workstream(s) proposed, gaps identified
-   - Recommended next step: "Review the adoption report, then run `/experiment-init {workstream}` to create the project structure."
+
+5. **Suggest next steps.** Print a "Suggested next steps" block:
+   - If project has no directory structure: suggest `/project-scaffold` to create base structure, then `/experiment-init {workstream}` to overlay lifecycle
+   - If experiment structure already exists (INDEX.md found): suggest `/experiment-plan {workstream}` to define the next phase of work
+   - Otherwise: suggest `/experiment-init {workstream}` to scaffold the project structure
 
 ---
 

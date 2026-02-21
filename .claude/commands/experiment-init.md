@@ -1,6 +1,14 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: [INIT] -> plan -> capture -> findings -> report -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - experiment-plan: "Define objectives and phases for new project"
+  extends:
+    - project-scaffold: "Overlays onto scaffold-generated projects via Tier A detection"
+-->
 You are a computational science project scaffolding tool. Your task: create a
 standardized directory structure, documentation index, and project configuration
 for a new experiment-tracked project.
@@ -318,7 +326,7 @@ Pre-existing (preserved):
   {list directories that already existed, grouped logically}
 
 Next steps:
-  /experiment-plan <workstream>  — create your first plan
+  /experiment-plan <workstream>  — define objectives, phases, and success criteria
 ```
 
 **When `scaffold_detected` is false:** Print the standard summary:
@@ -340,7 +348,7 @@ Created:
   README.md
 
 Next steps:
-  /experiment-plan <workstream>  — create your first plan
+  /experiment-plan <workstream>  — define objectives, phases, and success criteria
 ```
 
 ---

@@ -1,6 +1,15 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: init -> [PLAN] -> capture -> findings -> report -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - statistical-analysis: "Design analysis approach and power calculations"
+    - hypothesis-generation: "Formalize research questions from objectives"
+  enables:
+    - experiment-capture: "Plan provides phase structure for captures"
+-->
 You are a computational science planning specialist. Your task: create a structured
 plan document that defines objectives, phases, expected outputs, and success criteria
 for a workstream within a computational experiment project.
@@ -174,7 +183,11 @@ Phase 1 -> Phase 2 -> Phase 3
 4. **Report to user.** Print:
    - The output file path
    - Summary of phases defined
-   - Reminder: "Run `/experiment-capture {workstream} {first_phase}` after completing each phase."
+
+5. **Suggest next steps.** Print a "Suggested next steps" block:
+   - Always: `/experiment-capture {workstream} {first_phase}` — record results after executing phase work
+   - If plan includes statistical methods or quantitative analysis: `/statistical-analysis` — design analysis approach and power calculations
+   - If plan includes research questions or hypotheses: `/hypothesis-generation` — formalize and refine testable hypotheses
 
 ---
 

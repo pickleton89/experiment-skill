@@ -1,6 +1,15 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: init -> plan -> capture -> [FINDINGS] -> report -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - experiment-report: "Integrate findings into comprehensive report"
+    - scientific-writing: "Draft manuscript sections from synthesized results"
+    - scientific-slides: "Present findings at meetings or conferences"
+    - peer-review: "Self-review findings before reporting"
+-->
 You are a computational science findings synthesizer. Your task: generate a findings
 document that interprets analysis results, connects them across analyses, and
 evaluates them against the plan's success criteria.
@@ -187,7 +196,13 @@ objectives and any caveats.}
    - The output file path
    - A one-line summary of the key finding
    - List of source documents used
-   - Reminder: "Run `/experiment-report {workstream}` when ready to compile findings into a full report."
+
+5. **Suggest next steps.** Based on the findings produced, print a "Suggested next steps" block:
+   - If all plan phases have findings: `/experiment-report {workstream}` — compile integrated report
+   - If plan has remaining phases: `/experiment-capture {workstream} {next_phase}` — continue to next phase
+   - If findings are ready for manuscript drafting: `/scientific-writing` — draft manuscript sections from synthesized results
+   - If findings warrant methodological review: `/peer-review` — self-review methodology and results before reporting
+   - If results need presentation: `/scientific-slides` — build slide deck from findings
 
 ---
 

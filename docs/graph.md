@@ -187,6 +187,7 @@ Wikilinks use `[[ ]]` syntax for graph navigation between and within files.
 | `[[experiment-findings]]` | `.claude/commands/experiment-findings.md` |
 | `[[experiment-report]]` | `.claude/commands/experiment-report.md` |
 | `[[graph]]` | `docs/graph.md` (this file) |
+| `[[suite-moc]]` | `docs/suite-moc.md` |
 | `[[graph#naming-convention]]` | `docs/graph.md` Section: Naming Convention |
 | `[[graph#status-values]]` | `docs/graph.md` Section: Status Values |
 | `[[graph#indexmd-protocol]]` | `docs/graph.md` Section: INDEX.md Update Protocol |
@@ -214,6 +215,42 @@ Lifecycle examples use the `rna_folding` workstream (3 phases: data preparation,
 | Process artifact | capture | [[examples/capture-example]] |
 | Findings | findings | [[examples/findings-example]] |
 | Report | report | [[examples/report-example]] |
+
+---
+
+## Cross-Suite Relationships
+
+Edges from experiment commands to skills outside the suite. These are declared in `<!-- graph-edges: -->` metadata in each command file.
+
+| Command | External Skill | Relationship | When |
+|---------|---------------|-------------|------|
+| adopt | project-scaffold | feeds-into | Project needs scaffolding before init |
+| init | project-scaffold | extends | Overlays onto scaffold-generated projects (Tier A) |
+| plan | statistical-analysis | feeds-into | Plan includes quantitative analysis |
+| plan | hypothesis-generation | feeds-into | Plan includes research questions |
+| capture | plotting-libraries | feeds-into | Section 6 has quantitative measurements |
+| capture | reproducible-research | feeds-into | Complex environment or data lineage |
+| findings | scientific-writing | feeds-into | Manuscript drafting from results |
+| findings | scientific-slides | feeds-into | Presenting findings at meetings |
+| findings | peer-review | feeds-into | Self-review before reporting |
+| report | markdown-to-pdf | feeds-into | PDF output needed |
+| report | scientific-slides | feeds-into | Presenting results |
+| report | paper-2-web | feeds-into | Interactive web version of report |
+| report | oligon-brand | extends | Branded styling via --oligon flag |
+
+---
+
+## Gaps and Demand Signals
+
+Capabilities referenced or implied by the current commands that do not yet exist:
+
+| Signal | Evidence | Impact |
+|--------|----------|--------|
+| Cross-workstream comparison | report integrates one workstream only | Cannot compare results across projects |
+| Workstream status dashboard | No way to see all active workstreams at a glance | Must scan INDEX.md manually |
+| Automated figure generation | capture records measurements but doesn't visualize | Manual step between capture and findings |
+| Context recovery for interrupted work | capture handles single sessions | Multi-session work loses continuity |
+| Retrospective plan creation | adopt identifies phases but plan requires manual input | Existing projects need faster onboarding |
 
 ---
 

@@ -1,6 +1,14 @@
 <!-- template-version: 1.0 -->
 <!-- Lifecycle: init -> plan -> [CAPTURE] -> findings -> report -->
 <!-- see [[graph]] for canonical definitions -->
+<!-- graph-edges:
+  domain: research-tools
+  suite: experiment-lifecycle
+  feeds-into:
+    - experiment-findings: "Synthesize Section 3/6 results against plan criteria"
+    - plotting-libraries: "Visualize Section 6 quantitative measurements"
+    - reproducible-research: "Environment capture and data lineage from Section 3"
+-->
 You are a computational science documentation specialist. Your task: generate a
 structured process artifact that captures what was done during this session, with
 science-aware sections for data lineage, measurements, and artifact tracking.
@@ -212,6 +220,13 @@ known limitations of the results.}
    - The output file path
    - A one-line summary of what was captured
    - Any sections that were thin due to limited context (so the user can supplement)
+
+5. **Suggest next steps.** Based on the artifact produced, print a "Suggested next steps" block:
+   - If plan has remaining phases: `/experiment-capture {workstream} {next_phase}` — continue to next phase
+   - If Section 6 has quantitative results: `/plotting-libraries` — visualize measurements and generate figures
+   - If plan phase is complete: `/experiment-findings {workstream} {qualifier}` — synthesize results against plan criteria
+   - If this was the final phase: `/experiment-report {workstream}` — compile integrated report from all findings
+   - If environment or data lineage is complex: `/reproducible-research` — capture environment details and data deposition
 
 ---
 

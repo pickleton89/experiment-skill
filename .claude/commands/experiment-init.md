@@ -99,9 +99,58 @@ Create the following directories relative to the current working directory. Use 
 06-reports/findings/
 07-publication/
 config/
+scratch/
 ```
 
-**When `scaffold_detected` is true:** Track which directories already existed vs which were newly created. For each directory in the list above, note whether it was pre-existing or created. This tracking is used in the Phase 2 report. Typically the scaffold will have created most directories except `06-reports/findings/`, `01-documentation/templates/`, `01-documentation/notes/`, and `config/`.
+**When `scaffold_detected` is true:** Track which directories already existed vs which were newly created. For each directory in the list above, note whether it was pre-existing or created. This tracking is used in the Phase 2 report. Typically the scaffold will have created most directories except `06-reports/findings/`, `01-documentation/templates/`, `01-documentation/notes/`, `config/`, and `scratch/`.
+
+### 1a-ii. Environment Stub
+
+If `config/environment.yml` does not already exist, create it with:
+
+```yaml
+# Computational environment specification
+# Uncomment and populate the sections relevant to your project
+name: {project_name}
+
+# channels:
+#   - conda-forge
+#   - bioconda
+#   - defaults
+
+# dependencies:
+#   - python>=3.10
+#   - numpy
+#   - pandas
+#   - pip:
+#     - some-pip-package
+```
+
+If the file already exists, skip — do not overwrite.
+
+### 1a-iii. Raw Data Provenance README
+
+If `03-data/raw/README.md` does not already exist, create it with:
+
+````markdown
+# Raw Data Provenance
+
+> Files in this directory are **immutable** — never modify in place.
+
+## Data Registry
+
+| File | Source | Download Date | Version / Accession | Checksum (SHA-256) |
+|------|--------|--------------|--------------------|--------------------|
+|      |        |              |                    |                    |
+
+## Notes
+
+- Record every raw data file in the table above before use
+- Include full URLs, database accession numbers, or DOIs as source identifiers
+- Checksums ensure integrity: `shasum -a 256 <file>`
+````
+
+If the file already exists, skip — do not overwrite.
 
 ### 1b. INDEX.md
 
@@ -161,6 +210,7 @@ Write `01-documentation/INDEX.md` with this structure:
   findings/          Per-phase/tier findings
 07-publication/      Manuscripts, final PDFs, presentation figures
 config/              Project configuration
+scratch/             Exploratory work, temporary files (gitignored)
 ```
 ````
 
@@ -188,6 +238,7 @@ This project uses the `/experiment` documentation lifecycle:
 - Raw data in `03-data/raw/` is immutable — never modify in place
 - Working outputs in `04-analysis/` are gitignored
 - Curated results promoted to `05-results/`
+- Use relative paths in all scripts — never absolute paths
 
 ### Naming
 
@@ -223,6 +274,7 @@ This project uses the `/experiment` documentation lifecycle:
 - Raw data in `03-data/raw/` is immutable — never modify in place
 - Working outputs in `04-analysis/` are gitignored
 - Curated results promoted to `05-results/`
+- Use relative paths in all scripts — never absolute paths
 
 ## Naming
 
@@ -238,6 +290,7 @@ Artifacts follow: `{workstream}_{type}_{qualifier}.md`
 Check if `.gitignore` exists. If so, ensure it contains entries for:
 ```
 04-analysis/
+scratch/
 .DS_Store
 ```
 
@@ -245,6 +298,9 @@ If `.gitignore` does not exist, create one with:
 ```
 # Intermediate analysis outputs (large, reproducible)
 04-analysis/
+
+# Exploratory / scratch work
+scratch/
 
 # OS files
 .DS_Store
@@ -344,6 +400,9 @@ Created:
   06-reports/               (with findings/)
   07-publication/
   config/
+  scratch/                  (gitignored)
+  config/environment.yml    (environment stub)
+  03-data/raw/README.md     (data provenance)
   .claude/CLAUDE.md         (project configuration)
   README.md
 

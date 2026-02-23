@@ -276,4 +276,5 @@ Created by [[experiment-init]], consumed by all subsequent commands:
   findings/                 Per-phase/tier findings
 07-publication/             Manuscripts, final PDFs, presentation figures
 config/                     Project configuration
+scratch/                    Exploratory work, temporary files (gitignored)
 ```

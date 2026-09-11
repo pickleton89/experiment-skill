@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "sync_roots": [
+    "/mounted/research-collection"
+  ],
+  "projects": {
+    "existing-investigation-id": {
+      "research": "/mounted/research-collection/investigation",
+      "code": "/local/code/investigation",
+      "work": "/local/work/investigation",
+      "references": {
+        "reference-release-id": "/local/references/release"
+      }
+    }
+  }
+}

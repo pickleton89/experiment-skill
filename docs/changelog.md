@@ -1,4 +1,50 @@
+## 2026-09-11 — Proposed release; not promoted
+
+- Assemble the frozen repair-12 candidate for the accepted Mac workflow, including guarded history, source-access evidence, and consistent adoption/plan instructions.
+- Stage 3 and the single-project Stage 4 pilot are complete within their final acceptance records; historical failures remain retained.
+- Keep adoption-directory wording under manual review against init’s actual table. No full scientific run or general release is claimed.
+
+## 2026-09-10 — Isolated repair 6: preserve dated history
+
+- Route existing WORK checkpoints through the revision-checked research-work helper; unavailable routes leave the record unchanged and report a blocked checkpoint.
+- Reject removal or rewriting of stored dated-history bytes before replacement; preserve original line endings and trailing whitespace when appending.
+- Keep file-tool index recovery separate and recognize helper checkpoints in final readback checks. Live promotion and remaining acceptance failures stay deferred.
+
+## 2026-09-08 — isolated milestone-2 repair candidate
+
+## 2026-09-09 — Repair 5 refinement after fresh failures
+
+- Put the complete post-edit read and claim reconciliation gate beside every final response step.
+- Require named target/recovery pairs and distinguish criterion output sets, review versus issue sets, and unchanged versus baseline files.
+- Scope next-step suggestions to assessed phases and omit optional aggregate counts from closing responses.
+- Preserve first-round candidate and failed native evidence; rerun the refined candidate on fresh fixtures before acceptance.
+
+## 2026-09-09 — Isolated repair 5 candidate
+
+- Apply evidence reconciliation to adoption and planning as well as capture, findings and report, including WORK entries and final responses.
+- Distinguish target-specific recovery, literal output fields, unavailable evidence, review scope and the exact artifact corrected.
+- Require saved-artifact evidence links and reconcile summaries with their underlying items before delivery.
+
+Candidate-only changes; native acceptance and promotion remain separate gates.
+
+## 2026-09-09 — Isolated repair 4 candidate
+
+- Require a separate full target reread after recovery verification and before each file-tool write.
+- Reconcile initialization and recovery counts with enumerated snapshots; distinguish observations, fixed labels and declared expectations.
+- Keep all document claims at their preparation cutoff, leave unexercised criteria untested and constrain durations to evidenced intervals.
+
+Candidate-only repair; fresh native lifecycle and Desktop discovery acceptance remain separate gates.
+
+- Require verified original recovery copies before every file-tool record/index edit, with stop conditions and per-edit readback.
+- Clarify adoption documentation and recovery writes without granting source changes.
+
 # Changelog
+
+## 2026-09-08 — Isolated location-contract candidate
+
+- Add portable project identity and explicit host mapping with a dependency-free resolver; retain legacy discovery and reject broken split locations.
+- Apply shared research/index routing to all six commands, preserve existing init files, and capture actual execution identity across locations.
+- Add examples and executable contract checks; prompt execution and app promotion remain separate gates.
 
 ## 2026-02-20 — Per-project install and update mechanism
 

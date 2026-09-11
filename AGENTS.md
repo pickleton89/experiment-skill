@@ -6,14 +6,14 @@ A Claude Code skill suite for computational science documentation. Six slash com
 
 | Command | Purpose |
 |---------|---------|
-| `/experiment-adopt` | Audit existing project for lifecycle onboarding (read-only) |
+| `/experiment-adopt` | Audit existing project; write adoption documentation |
 | `/experiment-init` | Scaffold project directory structure |
 | `/experiment-plan` | Define objectives, phases, and success criteria |
 | `/experiment-capture` | Record process artifact from session context |
 | `/experiment-findings` | Synthesize results into findings document |
 | `/experiment-report` | Compile comprehensive report from findings |
 
-The skill is pure markdown — no Python runtime. Each command is a `.md` file in `.claude/commands/` that Claude Code executes as a prompt template.
+The six commands are Markdown prompt templates. A dependency-free Node resolver in scripts/locations.mjs implements location contract v1. The Python scaffold adapter follows the same contract; Node is required for executable resolution, with a documented file-tool fallback on restricted hosts.
 
 ## Common Commands
 
@@ -28,7 +28,7 @@ The skill is pure markdown — no Python runtime. Each command is a `.md` file i
 .claude/update-experiment-skill.sh   # update project from skill repo
 ```
 
-Both scripts are idempotent and safe (won't overwrite non-symlink files). Local installs create `.claude/update-experiment-skill.sh` (wrapper that re-runs install from the saved source path). There is no build step, linter, or test suite — validation is manual by invoking commands in Claude Code.
+Both scripts are idempotent and safe (won't overwrite non-symlink files). Local installs create `.claude/update-experiment-skill.sh` (wrapper that re-runs install from the saved source path). Run node --test tests/*.test.mjs for protocol consistency and resolver checks. These do not execute the prompt commands. Actual command invocation in each applicable app is a separate release gate.
 
 ## Architecture
 
@@ -53,9 +53,9 @@ Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`
 
 ### Key Design Decisions
 
-- **Stateless** — no state files; `INDEX.md` is the only shared registry
+- **Declarative locations** — research-project.json stores portable identity and roles; host paths remain external. INDEX.md is the scientific artifact registry.
 - **Embedded templates** — each command contains its full output template
-- **Read-only adopt** — never moves files; produces advisory report only
+- **Source-preserving adopt** — never moves sources; writes advisory documentation, authorized continuity and verified recovery
 - **Opt-in branding** — only `/experiment-report --oligon` triggers branded PDF
 
 ## Key Files

@@ -4,7 +4,7 @@ type: plan
 workstream: rna_folding
 project: rna_structure_prediction
 date: 2026-02-15
-status: active  <!-- status values: pending | active | in-progress | complete | superseded -->
+status: active
 ---
 
 # RNA Folding Plan

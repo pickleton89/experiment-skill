@@ -4,7 +4,7 @@ type: adoption
 workstream: protein_docking
 project: docking_benchmark
 date: 2026-02-18
-status: active  <!-- status values: pending | active | in-progress | complete | superseded -->
+status: active
 source_directory: ./docking-benchmark
 ---
 

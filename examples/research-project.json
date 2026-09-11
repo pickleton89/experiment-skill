@@ -1,0 +1,17 @@
+{
+  "location_version": 1,
+  "id": "existing-investigation-id",
+  "layout": "split",
+  "paths": {
+    "documentation": "01-documentation",
+    "index": "01-documentation/INDEX.md",
+    "data": "03-data",
+    "results": "05-results",
+    "reports": "06-reports",
+    "findings": "06-reports/findings",
+    "publication": "07-publication"
+  },
+  "references": [
+    "reference-release-id"
+  ]
+}

@@ -6,7 +6,7 @@ plan: rna_folding_plan.md
 phase: phase1
 project: rna_structure_prediction
 date: 2026-02-16
-status: complete  <!-- status values: pending | active | in-progress | complete | superseded -->
+status: complete
 ---
 
 # RNA Folding Process — Phase 1

@@ -2,6 +2,20 @@
 
 A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skill suite for managing the full lifecycle of computational science documentation: adopt, plan, capture, findings, report. Each command is a markdown prompt template that Claude Code executes as a slash command.
 
+## Isolated location-contract candidate (2026-09-08)
+
+This candidate supports a portable research-project.json plus an explicit host location
+mapping across all six command definitions. See [the canonical contract](docs/graph.md)
+and [examples](examples/README.md). Use scripts/locations.mjs with --start and --locations
+to resolve the code, research and work folders before command execution. No shell exports
+or live installation changes are implied. Node 20+ is required for the resolver; the
+commands document a file-tool fallback for hosts without Node.
+
+Run node --test tests/*.test.mjs for local contract checks. Actual prompt execution and
+Codex/Claude/Cowork/Chat acceptance remain unverified; defer installation/promotion.
+The installation examples below describe the existing release mechanism, not permission
+to replace live command links with this candidate.
+
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
@@ -66,7 +80,7 @@ Scans an existing project directory, classifies artifacts, identifies documentat
 /experiment-init my_project --description "Structural comparison of aptamer variants"
 ```
 
-Creates the numbered directory tree (`01-documentation/` through `07-publication/`), `INDEX.md`, project `CLAUDE.md`, and `README.md`.
+Adds missing lifecycle files at the resolved research/code/work locations. Existing legacy trees remain supported; new split projects keep their scientific index in research, use canonical AGENTS.md with a CLAUDE.md import, and preserve existing files.
 
 ### 2. Create a plan
 

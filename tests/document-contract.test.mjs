@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 const base=path.resolve(import.meta.dirname,'..');
 const read=p=>fs.readFileSync(path.join(base,p),'utf8');
 const enumValues=new Set(['pending','active','in-progress','complete','superseded']);
@@ -23,7 +24,10 @@ for(const name of ['adopt','plan','capture','findings','report'])test(`${name} p
 test('location guidance is shared with the research-work package and contract document',()=>{
  const location=s=>s.match(/<!-- location-contract-v1:start -->[\s\S]*?<!-- location-contract-v1:end -->/)?.[0];
  assert.equal(location(read('docs/location-contract.md')),location(graph));
- assert.equal(location(read('../research-work/references/locations.md')),location(graph));
+ const sibling=path.resolve(base,'../research-work');
+ const researchWork=process.env.RESEARCH_WORK_SKILL || (fs.existsSync(sibling)
+   ? sibling : path.join(os.homedir(),'.agents/skills/research-work'));
+ assert.equal(location(fs.readFileSync(path.join(researchWork,'references/locations.md'),'utf8')),location(graph));
 });
 
 const closure=s=>s.match(/<!-- artifact-close-v1:start -->[\s\S]*?<!-- artifact-close-v1:end -->/)?.[0];

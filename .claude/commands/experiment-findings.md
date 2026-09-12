@@ -69,16 +69,33 @@ in portable `paths` before initialization. Defaults are 01-documentation/ and
 reports=06-reports, findings=06-reports/findings, publication=07-publication.
 All are research-relative, containment checked after resolving aliases. Code and
 working storage cannot overlap research or sit beneath configured synchronization roots.
-Configured roots must exist; only scaffold creation may allow its new code root to
-be absent, after validating the research and working roots.
+Configured roots must exist; scaffold creation may allow its new code root and its
+exact code/04-analysis work root to be absent, after validating research. A disjoint
+work root must already exist. Different project IDs must not own overlapping
+research/code/work roots, even when a project marker is present. Shared reference
+roots are allowed. Validate configured synchronization roots after resolving aliases.
 
 For split layouts, directory names elsewhere in these templates are logical roles:
 01-documentation -> paths.documentation; INDEX.md -> paths.index;
 03-data -> paths.data; 05-results -> paths.results; 06-reports -> paths.reports;
 06-reports/findings -> paths.findings; 07-publication -> paths.publication.
 Plans/process go under paths.documentation. Scripts, tests and environments belong
-to code; 04-analysis and scratch belong to work. Never duplicate a numbered research
-tree or WORK.md in code. Resolve input/output overrides to a role first: relative
+to code. The logical 04-analysis role is the resolved work root itself: never append
+04-analysis to it. Classify a target inside work BEFORE testing code containment.
+For a new project home, choose a folder at any depth beneath this Mac's
+/Users/jeffkiefer/Documents/research, with the OneDrive investigation's folder name;
+set code to that home and work to code/04-analysis. Matching names do not link projects:
+use the confirmed stable ID and explicit paths. Create code/02-scripts, code/config,
+code/tests and code/scratch; keep framework directories such as app/ intact.
+Keep the private host map at code/config/research-locations.json, Git-ignored, and
+pass it explicitly via --locations, including from subfolders. New AGENTS.md must
+name the map; CLAUDE.md imports AGENTS.md. Ignore /04-analysis/, /scratch/, local
+environments and the host map; retain portable environment manifests and lockfiles.
+Existing disjoint work mappings keep their scripts/docs and work/intermediates/scratch
+allocation. Preserve existing mappings, names, legacy layouts and custom research paths.
+Run temporary operations only in a fresh directory directly under resolved work;
+stage fixture/input copies there and publish curated research outputs only explicitly.
+Never duplicate a numbered research tree or WORK.md in code. Resolve input/output overrides to a role first: relative
 research artifact paths use research; explicit external overrides require a mapped,
 authorized location and must not silently redirect the authoritative index.
 

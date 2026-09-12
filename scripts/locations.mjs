@@ -64,8 +64,17 @@ export function resolveProject(start, {locations, projectFile, allowNewCode = fa
   if (spec.location_version !== 1 || spec.layout !== 'split' || typeof spec.id !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(spec.id)) throw Error('Invalid split-project identity or location_version');
   if (!host?.projects[spec.id]) throw Error(`Explicit split project ${spec.id} requires a host mapping; no legacy fallback`);
   const entry = host.projects[spec.id], roots = {};
+  // A marker selects identity; it must not conceal overlapping project ownership.
+  for (const [id, other] of Object.entries(host.projects)) {
+    if (id === spec.id) continue;
+    for (const a of ['research','code','work']) for (const b of ['research','code','work']) {
+      const left = canonical(entry[a], false), right = canonical(other[b], false);
+      if (within(left,right) || within(right,left)) throw Error('Ambiguous host project mapping: overlapping project roots');
+    }
+  }
   for (const key of ['research','code','work']) {
-    roots[key] = canonical(entry[key], !(allowNewCode && key === 'code'));
+    const nestedWork = key === 'work' && canonical(entry.work, false) === path.join(canonical(entry.code, false), '04-analysis');
+    roots[key] = canonical(entry[key], !(allowNewCode && (key === 'code' || nestedWork)));
     if (fs.existsSync(roots[key]) && !fs.statSync(roots[key]).isDirectory()) throw Error(`${key} must be a directory`);
   }
   if (within(roots.research,roots.code) || within(roots.code,roots.research) || within(roots.research,roots.work) || within(roots.work,roots.research)) throw Error('Research must be separate from code and working storage');

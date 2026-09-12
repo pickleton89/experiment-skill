@@ -9,5 +9,3 @@ Choose the exact local home anywhere beneath /Users/jeffkiefer/Documents/researc
 5. Execute only an authorized operation into a fresh directory directly under resolved work. Stage inputs there; treat outputs beneath work as working outputs even though within code. Curated publication to resolved results/reports/publication is a separate explicit action.
 
 New Git exclusions: /04-analysis/, /scratch/, local environments, /config/research-locations.json. Portable metadata, environment manifests and lockfiles remain tracked. Existing legacy/disjoint mappings and custom research paths remain authoritative; setup never renames them. App access is separately configured.
-
-The sibling JSON examples are templates, not executed projects. Replace sample paths; preserve existing IDs and custom paths.

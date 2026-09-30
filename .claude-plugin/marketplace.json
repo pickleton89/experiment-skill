@@ -5,13 +5,13 @@
     "url": "https://github.com/pickleton89"
   },
   "metadata": {
-    "description": "Claude Code commands for documenting computational science projects from adoption through final report."
+    "description": "Claude Code skills for documenting computational science projects from adoption through final report."
   },
   "plugins": [
     {
       "name": "experiment-skill",
       "source": "./",
-      "description": "Slash commands for the computational-science documentation lifecycle: adopt, init, plan, capture, findings, report.",
+      "description": "Skills for the computational-science documentation lifecycle: adopt, init, plan, capture, findings, report.",
       "version": "0.1.0",
       "license": "MIT",
       "keywords": ["research", "documentation", "bioinformatics", "reproducibility", "lifecycle"]

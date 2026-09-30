@@ -1,7 +1,7 @@
 {
   "name": "experiment-skill",
   "version": "0.1.0",
-  "description": "Slash commands for the computational-science documentation lifecycle: adopt, init, plan, capture, findings, report.",
+  "description": "Skills for the computational-science documentation lifecycle: adopt, init, plan, capture, findings, report.",
   "author": {
     "name": "pickleton89",
     "url": "https://github.com/pickleton89"
@@ -9,31 +9,11 @@
   "homepage": "https://github.com/pickleton89/experiment-skill",
   "repository": "https://github.com/pickleton89/experiment-skill",
   "license": "MIT",
-  "keywords": ["research", "documentation", "bioinformatics", "reproducibility", "lifecycle"],
-  "commands": {
-    "experiment-adopt": {
-      "source": "./.claude/commands/experiment-adopt.md",
-      "description": "Audit an existing project and write adoption documentation before the lifecycle starts"
-    },
-    "experiment-init": {
-      "source": "./.claude/commands/experiment-init.md",
-      "description": "Scaffold the experiment lifecycle files at the resolved research, code and work locations"
-    },
-    "experiment-plan": {
-      "source": "./.claude/commands/experiment-plan.md",
-      "description": "Define objectives, phases and success criteria for a workstream"
-    },
-    "experiment-capture": {
-      "source": "./.claude/commands/experiment-capture.md",
-      "description": "Record a process artifact (commands, data lineage, decisions, issues) from the session"
-    },
-    "experiment-findings": {
-      "source": "./.claude/commands/experiment-findings.md",
-      "description": "Synthesize results, process artifacts and plan criteria into a findings document"
-    },
-    "experiment-report": {
-      "source": "./.claude/commands/experiment-report.md",
-      "description": "Compile an IMRAD-style report from all findings for a workstream"
-    }
-  }
+  "keywords": [
+    "research",
+    "documentation",
+    "bioinformatics",
+    "reproducibility",
+    "lifecycle"
+  ]
 }

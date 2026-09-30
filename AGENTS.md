@@ -67,7 +67,8 @@ Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`
 | `docs/design.md` | Full design rationale and architecture decisions |
 | `examples/` | Synthetic examples: `rna_folding` (lifecycle), `protein_docking` (adoption) |
 | `install.sh` / `uninstall.sh` | Symlink management scripts (legacy dev install) |
-| `.claude-plugin/plugin.json`, `marketplace.json` | Plugin + single-plugin marketplace manifests. `plugin.json` maps each command to `./.claude/commands/<name>.md` with a `description` (the command files have no frontmatter because line 1 is the template-version tag), so renaming or moving a command means updating it. Keep `version` identical across both manifests and `pyproject.toml` (`tests/plugin-manifest.test.mjs` enforces this). Check with `claude plugin validate . --strict`. |
+| `skills/<name>/SKILL.md` | **Generated** from the commands by `scripts/build-skills.mjs` (never edit by hand). The plugin and Claude Science import expose these, not the commands. Frontmatter descriptions live in the script's `DESCRIPTIONS` table because command files have no frontmatter (line 1 is the template-version tag). After ANY command edit run `node scripts/build-skills.mjs`; `tests/skills.test.mjs` fails on drift. |
+| `.claude-plugin/plugin.json`, `marketplace.json` | Plugin + single-plugin marketplace manifests. `plugin.json` has no `commands` map on purpose: `skills/` is auto-discovered, and a map would list every command twice. Keep `version` identical across both manifests and `pyproject.toml` (`tests/plugin-manifest.test.mjs` enforces this). Check with `claude plugin validate . --strict`. |
 
 ## Editing Commands
 

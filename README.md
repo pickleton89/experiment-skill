@@ -39,6 +39,12 @@ Per the Claude Code plugin docs, plugin commands are namespaced by plugin name, 
 
 If you previously used the symlink install below, remove those links (`./uninstall.sh --global`, or `./uninstall.sh` in each project) to avoid duplicate commands.
 
+### In Claude Science (skill import)
+
+Claude Science imports `skills/<name>/SKILL.md` directories, not slash commands. The `skills/` folder in this repo is generated from `.claude/commands/` by `scripts/build-skills.mjs`, so the importer can read it. In **Skills → Import from GitHub**, paste `https://github.com/pickleton89/experiment-skill`, preview, select the six skills, and import. Imports are copied as-is and do not update automatically; re-import to pick up changes.
+
+Not yet verified in Claude Science: whether `$ARGUMENTS` is filled in for imported skills, and whether Node is available for `scripts/locations.mjs`. The commands document a file-tool fallback for hosts without Node, and `${CLAUDE_PLUGIN_ROOT}` is only defined when installed as a Claude Code plugin.
+
 ### Legacy: symlink install (development)
 
 Use this when editing the commands in place. Clone the skill repo once, then install into any project:

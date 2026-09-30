@@ -1,3 +1,9 @@
+## 2026-09-30 — Skills for Claude Science import
+
+- Claude Science rejected the plugin ("no skills/ dirs with SKILL.md") because it imports skills, not commands. Add generated `skills/<name>/SKILL.md` for all six commands via `scripts/build-skills.mjs`; commands remain canonical and a test fails on drift.
+- Drop the `commands` map from `plugin.json` so the plugin exposes the skills once; descriptions now come from the generator.
+- Not verified: an actual import into Claude Science, `$ARGUMENTS` handling there, and Node availability for the resolver.
+
 ## 2026-09-30 — Plugin and marketplace packaging
 
 - Add `.claude-plugin/plugin.json` and a single-plugin `.claude-plugin/marketplace.json`; commands stay in `.claude/commands/` and are mapped one by one in the manifest with descriptions, so existing symlink installs are unaffected and listings do not show the template-version comment.

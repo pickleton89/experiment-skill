@@ -22,7 +22,24 @@ to replace live command links with this candidate.
 
 ## Install
 
-Clone the skill repo once, then install into any project:
+### As a Claude Code plugin (recommended)
+
+> **Status:** packaging only. The location-contract candidate described above is still unverified in live app runs, and promotion remains deferred. Install the plugin from a branch or release you have decided to promote.
+
+This repo is its own single-plugin marketplace:
+
+```
+/plugin marketplace add pickleton89/experiment-skill
+/plugin install experiment-skill@experiment-skill
+```
+
+Per the Claude Code plugin docs, plugin commands are namespaced by plugin name, for example `/experiment-skill:experiment-init`. The commands resolve the location-contract scripts through `${CLAUDE_PLUGIN_ROOT}/scripts/`. Update with `/plugin marketplace update experiment-skill`.
+
+If you previously used the symlink install below, remove those links (`./uninstall.sh --global`, or `./uninstall.sh` in each project) to avoid duplicate commands.
+
+### Legacy: symlink install (development)
+
+Use this when editing the commands in place. Clone the skill repo once, then install into any project:
 
 ```bash
 git clone https://github.com/pickleton89/experiment-skill.git ~/projects/experiment-skill

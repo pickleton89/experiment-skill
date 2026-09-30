@@ -1,0 +1,14 @@
+{
+  "name": "experiment-skill",
+  "version": "0.1.0",
+  "description": "Slash commands for the computational-science documentation lifecycle: adopt, init, plan, capture, findings, report.",
+  "author": {
+    "name": "pickleton89",
+    "url": "https://github.com/pickleton89"
+  },
+  "homepage": "https://github.com/pickleton89/experiment-skill",
+  "repository": "https://github.com/pickleton89/experiment-skill",
+  "license": "MIT",
+  "keywords": ["research", "documentation", "bioinformatics", "reproducibility", "lifecycle"],
+  "commands": "./.claude/commands"
+}

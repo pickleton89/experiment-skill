@@ -1,3 +1,10 @@
+## 2026-09-30 — Plugin and marketplace packaging
+
+- Add `.claude-plugin/plugin.json` and a single-plugin `.claude-plugin/marketplace.json`; commands stay in `.claude/commands/` via the manifest `commands` path, so existing symlink installs are unaffected.
+- Add a plugin-path note above the shared location-contract block in each command so `scripts/` resolves through `${CLAUDE_PLUGIN_ROOT}`. The shared block is unchanged, keeping it byte-identical with the research-work package.
+- Add manifest tests. `install.sh` and `uninstall.sh` remain as a legacy development route.
+- Not verified: an actual command invocation from an installed plugin (expansion of `${CLAUDE_PLUGIN_ROOT}` in the command body, namespaced command names). The earlier promotion deferral for the location-contract candidate still applies.
+
 ## 2026-09-11 — Proposed release; not promoted
 
 - Assemble the frozen repair-12 candidate for the accepted Mac workflow, including guarded history, source-access evidence, and consistent adoption/plan instructions.

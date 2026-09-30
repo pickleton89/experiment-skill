@@ -66,12 +66,14 @@ Artifacts link via naming convention: `{workstream}_{type}_{qualifier}.md`
 | `docs/graph.md` | Single source of truth: command relationships, naming convention, status enum, INDEX.md update protocol, wikilinks |
 | `docs/design.md` | Full design rationale and architecture decisions |
 | `examples/` | Synthetic examples: `rna_folding` (lifecycle), `protein_docking` (adoption) |
-| `install.sh` / `uninstall.sh` | Symlink management scripts |
+| `install.sh` / `uninstall.sh` | Symlink management scripts (legacy dev install) |
+| `.claude-plugin/plugin.json`, `marketplace.json` | Plugin + single-plugin marketplace manifests. `plugin.json` `commands` points at `./.claude/commands`, so do not move that directory without updating it. Keep `version` identical across both manifests and `pyproject.toml` (`tests/plugin-manifest.test.mjs` enforces this). Check with `claude plugin validate . --strict`. |
 
 ## Editing Commands
 
 When modifying a command file, preserve:
 
+- The "Plugin install" note above the `location-contract-v1` block. It lives outside the shared block on purpose: that block must stay byte-identical with `docs/graph.md`, `docs/location-contract.md`, and the external research-work package's `references/locations.md`.
 - The `<!-- template-version: 1.0 -->` tag on line 1 and lifecycle comment on line 2
 - The Phase 0/1/2 structure and `$ARGUMENTS` variable reference
 - The workstream naming validation block (pattern: `[a-z][a-z0-9_]{1,38}[a-z0-9]`)

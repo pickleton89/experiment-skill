@@ -33,6 +33,8 @@ $ARGUMENTS = [workstream] [--output path] [--oligon] [--scope "phase1,phase2"] [
 
 ## Phase 0: Context Discovery
 
+**Plugin install.** When installed from the `experiment-skill` plugin, the suite scripts are in `${CLAUDE_PLUGIN_ROOT}/scripts/` (for example `${CLAUDE_PLUGIN_ROOT}/scripts/locations.mjs`). Use that directory in place of the source-path lookup below. If the variable appears here unexpanded (legacy symlink install), use the lookup below.
+
 <!-- location-contract-v1:start -->
 ### Shared location contract v1
 

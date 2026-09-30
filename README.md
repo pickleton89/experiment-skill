@@ -35,6 +35,8 @@ This repo is its own single-plugin marketplace:
 
 Per the Claude Code plugin docs, plugin commands are namespaced by plugin name, for example `/experiment-skill:experiment-init`. The commands resolve the location-contract scripts through `${CLAUDE_PLUGIN_ROOT}/scripts/`. Update with `/plugin marketplace update experiment-skill`.
 
+**Optional companion:** the commands checkpoint `WORK.md` through the separate `research-work` skill (its `work-records.mjs` helper), which is not bundled here. Without it, the checkpoint step is reported as blocked and the `WORK.md` record is left unchanged; all other commands work normally.
+
 If you previously used the symlink install below, remove those links (`./uninstall.sh --global`, or `./uninstall.sh` in each project) to avoid duplicate commands.
 
 ### Legacy: symlink install (development)

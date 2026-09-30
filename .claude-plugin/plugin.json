@@ -10,5 +10,30 @@
   "repository": "https://github.com/pickleton89/experiment-skill",
   "license": "MIT",
   "keywords": ["research", "documentation", "bioinformatics", "reproducibility", "lifecycle"],
-  "commands": "./.claude/commands"
+  "commands": {
+    "experiment-adopt": {
+      "source": "./.claude/commands/experiment-adopt.md",
+      "description": "Audit an existing project and write adoption documentation before the lifecycle starts"
+    },
+    "experiment-init": {
+      "source": "./.claude/commands/experiment-init.md",
+      "description": "Scaffold the experiment lifecycle files at the resolved research, code and work locations"
+    },
+    "experiment-plan": {
+      "source": "./.claude/commands/experiment-plan.md",
+      "description": "Define objectives, phases and success criteria for a workstream"
+    },
+    "experiment-capture": {
+      "source": "./.claude/commands/experiment-capture.md",
+      "description": "Record a process artifact (commands, data lineage, decisions, issues) from the session"
+    },
+    "experiment-findings": {
+      "source": "./.claude/commands/experiment-findings.md",
+      "description": "Synthesize results, process artifacts and plan criteria into a findings document"
+    },
+    "experiment-report": {
+      "source": "./.claude/commands/experiment-report.md",
+      "description": "Compile an IMRAD-style report from all findings for a workstream"
+    }
+  }
 }

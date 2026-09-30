@@ -22,3 +22,6 @@ scratch/
 
 # Test output
 test-project/
+
+# Local Claude Code settings
+.claude/settings.local.json

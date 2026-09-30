@@ -1,6 +1,7 @@
 ## 2026-09-30 — Plugin and marketplace packaging
 
-- Add `.claude-plugin/plugin.json` and a single-plugin `.claude-plugin/marketplace.json`; commands stay in `.claude/commands/` via the manifest `commands` path, so existing symlink installs are unaffected.
+- Add `.claude-plugin/plugin.json` and a single-plugin `.claude-plugin/marketplace.json`; commands stay in `.claude/commands/` and are mapped one by one in the manifest with descriptions, so existing symlink installs are unaffected and listings do not show the template-version comment.
+- Document `research-work` as an optional, unbundled companion; untrack `.claude/settings.local.json` and gitignore it.
 - Add a plugin-path note above the shared location-contract block in each command so `scripts/` resolves through `${CLAUDE_PLUGIN_ROOT}`. The shared block is unchanged, keeping it byte-identical with the research-work package.
 - Add manifest tests. `install.sh` and `uninstall.sh` remain as a legacy development route.
 - Not verified: an actual command invocation from an installed plugin (expansion of `${CLAUDE_PLUGIN_ROOT}` in the command body, namespaced command names). The earlier promotion deferral for the location-contract candidate still applies.

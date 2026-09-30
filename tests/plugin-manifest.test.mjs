@@ -7,12 +7,14 @@ const base = path.resolve(import.meta.dirname, '..');
 const json = p => JSON.parse(fs.readFileSync(path.join(base, p), 'utf8'));
 const NAMES = ['adopt', 'init', 'plan', 'capture', 'findings', 'report'];
 
-test('plugin manifest points at a command directory containing all six commands', () => {
+test('plugin manifest maps all six commands to existing files with descriptions', () => {
   const plugin = json('.claude-plugin/plugin.json');
   assert.equal(plugin.name, 'experiment-skill');
-  assert.match(plugin.commands, /^\.\//, 'custom paths must start with ./');
-  for (const n of NAMES) {
-    assert.ok(fs.existsSync(path.join(base, plugin.commands, `experiment-${n}.md`)), n);
+  assert.deepEqual(Object.keys(plugin.commands).sort(), NAMES.map(n => `experiment-${n}`).sort());
+  for (const [name, entry] of Object.entries(plugin.commands)) {
+    assert.match(entry.source, /^\.\//, `${name}: custom paths must start with ./`);
+    assert.ok(fs.existsSync(path.join(base, entry.source)), `${name}: ${entry.source} missing`);
+    assert.ok(entry.description?.length > 20, `${name}: description needed (line 1 of each command is a template-version comment)`);
   }
 });
 
